@@ -1,0 +1,10 @@
+{
+  "construct": {
+    "name": "",
+    "folder": "",
+    "version": "v1_8_R3",
+    "mod": "SPIGOT",
+    "systemRam": 1024,
+    "useAikarFlags": false
+  }
+}
