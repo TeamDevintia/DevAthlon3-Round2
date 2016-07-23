@@ -31,6 +31,7 @@ public class CommandLineCommandHandler {
      * Creates the commands
      */
     private void addCommands() {
+        //TODO add more usefull commands
         commands.put("stop", (args) -> {
             log.info("stopping servers");
             ServerWrapper.getInstance().stopServers();
