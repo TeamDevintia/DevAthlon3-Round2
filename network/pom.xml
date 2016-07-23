@@ -20,4 +20,7 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+    </build>
 </project>

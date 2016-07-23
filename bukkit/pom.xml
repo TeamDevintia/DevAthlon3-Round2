@@ -16,6 +16,7 @@
     </properties>
 
     <build>
+        <finalName>bukkit</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>

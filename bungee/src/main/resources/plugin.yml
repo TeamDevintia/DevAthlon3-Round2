@@ -1,0 +1,4 @@
+name: ServerWrapperClient
+main: io.github.teamdevintia.round2.bungee.Main
+version: 1.0
+author: TeamDevinita

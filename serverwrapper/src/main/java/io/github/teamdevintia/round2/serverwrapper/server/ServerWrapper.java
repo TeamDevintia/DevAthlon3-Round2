@@ -1,12 +1,15 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
 import lombok.Getter;
 import lombok.extern.java.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * The main handler class. manages all the stuff
@@ -18,6 +21,7 @@ import java.util.List;
 public class ServerWrapper {
 
     private static ServerWrapper INSTANCE;
+    private Server bungee;
     //TODO we need to remove the servers at some point
     private List<Server> servers;
     private ServerJarManager jarManager;
@@ -52,13 +56,24 @@ public class ServerWrapper {
         long loaded = jarManager.checkAvailability();
         log.info("Found " + loaded + " ServerJars in repo " + jarManager.getRepo());
 
+        // init placeholders
         placeHolderHandler = new PlaceHolderHandler();
+
+        // start bungee
+        try {
+            bungee = Server.getBungee();
+            bungee.start();
+        } catch (ServerJarNotFoundException | IOException e) {
+            log.log(Level.SEVERE, "Could not start bungee!", e);
+        }
     }
 
     /**
      * Stops all running servers
      */
     public void stopServers() {
+        bungee.getThread().stopServer();
+
         servers.stream().filter(Server::isRunning).forEach(server -> server.getThread().stopServer());
     }
 

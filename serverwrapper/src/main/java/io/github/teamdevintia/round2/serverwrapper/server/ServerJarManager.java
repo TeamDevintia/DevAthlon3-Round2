@@ -30,6 +30,9 @@ public class ServerJarManager {
      */
     public void init() {
         supportedJars.add(new ServerJar(new File("spigot-1.10.jar"), ServerMod.SPIGOT, ServerVersion.v1_10_R1, false));
+
+        // always use latest bungee, it is backwards compatible
+        supportedJars.add(new ServerJar(new File("BungeeCord.jar"), ServerMod.BUNGEE, ServerVersion.v1_10_R1, false));
     }
 
     /**

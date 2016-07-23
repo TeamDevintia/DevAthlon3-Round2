@@ -1,5 +1,6 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.serverwrapper.FileUtil;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class Server {
      * Starts the server (into a new thread)
      *
      * @throws ServerJarNotFoundException when a server is started with a unknown jar
-     * @throws IOException if something else goes wrong
+     * @throws IOException                if something else goes wrong
      */
     public void start() throws ServerJarNotFoundException, IOException {
         ServerWrapper.getInstance().addServer(this);
@@ -43,7 +44,7 @@ public class Server {
         List<String> options = new ArrayList<>();
         options.add("java");
         options.addAll(serverJavaOps.getFlags());
-        options.add("-Dcom.mojang.eula.agree=true");
+        options.add("-Dcom.mojang.eula.agree=true"); // fuck you eula
         options.add("-Djline.terminal=jline.UnsupportedTerminal");
         options.add("-DserverName=" + name);
         options.add("-jar");
@@ -56,6 +57,18 @@ public class Server {
             serverFolder.mkdirs();
         }
 
+        File plugins = new File(serverFolder, "plugins");
+        System.out.println(plugins.getAbsolutePath());
+        if (!plugins.exists()) {
+            System.out.println("mkdirs " + plugins.mkdirs());
+        }
+
+        if (serverMod == ServerMod.BUNGEE) {
+            FileUtil.copyPlugin(FileUtil.BUNGEE, plugins);
+        } else {
+            FileUtil.copyPlugin(FileUtil.BUKKIT, plugins);
+        }
+
         ProcessBuilder pb = new ProcessBuilder(options);
         pb.directory(serverFolder);
 
@@ -64,5 +77,12 @@ public class Server {
             log.info("Server " + server.getName() + " existed with status code " + statusCode);
             running = false;
         });
+    }
+
+    /**
+     * @return the server object for the bungeecord server
+     */
+    public static Server getBungee() {
+        return new ServerBuilder("bungee").javaOps(new ServerJavaOps(512, false)).version(ServerVersion.v1_10_R1).mod(ServerMod.BUNGEE).port(25565).build();
     }
 }

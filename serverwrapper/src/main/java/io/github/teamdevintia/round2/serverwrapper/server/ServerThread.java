@@ -22,8 +22,8 @@ public class ServerThread extends Thread {
     /**
      * Starts the server thread
      *
-     * @param server the server to start
-     * @param pb the process builder which process should be started
+     * @param server   the server to start
+     * @param pb       the process builder which process should be started
      * @param callback the callback that gets called if this threads stops (and the underlying server)
      */
     public ServerThread(Server server, ProcessBuilder pb, ServerThreadCallback callback) {
@@ -71,14 +71,19 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * Stops this server (send stop into console)
+     * Stops this server (send stop/end into console)
      */
     public void stopServer() {
-        sendMessage("stop");
+        if (server.getServerMod() == ServerMod.BUNGEE) {
+            sendMessage("end");
+        } else {
+            sendMessage("stop");
+        }
     }
 
     /**
      * redirects some thream somewhere
+     *
      * @author spigotmc
      */
     @RequiredArgsConstructor
