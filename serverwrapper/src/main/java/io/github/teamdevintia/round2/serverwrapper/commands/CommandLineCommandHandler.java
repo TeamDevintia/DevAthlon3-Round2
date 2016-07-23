@@ -1,6 +1,7 @@
 package io.github.teamdevintia.round2.serverwrapper.commands;
 
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
+import io.github.teamdevintia.round2.serverwrapper.placeholder.MCSignOnDoor;
 import io.github.teamdevintia.round2.serverwrapper.server.*;
 import lombok.extern.java.Log;
 
@@ -40,10 +41,12 @@ public class CommandLineCommandHandler {
                             log.log(Level.ALL, "Could not find server jar", e);
                         }
                         break;
+                    case "mcsignondoor":
+                        new MCSignOnDoor(40000, "Gone Fishin' Back in Five Minutes", "0", "0", "Offline", "Gone Fishin' Back in Five Minutes\nServer is offline").start();
                     case "stop":
                         log.info("stopping servers");
                         ServerWrapper.getInstance().stopServers();
-                       // System.exit(0);
+                        // System.exit(0);
                         break;
                     default:
                         break;
