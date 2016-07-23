@@ -1,5 +1,9 @@
 package io.github.teamdevintia.round2.bungee;
 
+import io.github.teamdevintia.round2.bungee.network.NetHandlerInbound;
+import io.github.teamdevintia.round2.bungee.network.NetHandlerOutbound;
+import io.github.teamdevintia.round2.network.INetHandlerInbound;
+import io.github.teamdevintia.round2.network.INetHandlerOutbound;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -11,7 +15,12 @@ public class Main extends Plugin {
 
     @Override
     public void onLoad() {
-        super.onLoad();
+
+        INetHandlerInbound netHandlerInbound = new NetHandlerInbound();
+        INetHandlerOutbound netHandlerOutbound = new NetHandlerOutbound();
+
+        
+
     }
 
     @Override
