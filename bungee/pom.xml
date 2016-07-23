@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>io.github.teamdevintia.round2</groupId>
     <artifactId>bungee</artifactId>
 
     <repositories>
@@ -27,7 +28,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.teamdevintia</groupId>
+            <groupId>io.github.teamdevintia.round2</groupId>
             <artifactId>network</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
