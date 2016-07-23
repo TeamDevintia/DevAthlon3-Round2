@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.serverwrapper;
+package io.github.teamdevintia.round2.serverwrapper.server;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +24,5 @@ public class ServerJar {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public File getFullFile() {
-        return new File(ServerWrapper.getInstance().getRoot(), file.getName());
     }
 }

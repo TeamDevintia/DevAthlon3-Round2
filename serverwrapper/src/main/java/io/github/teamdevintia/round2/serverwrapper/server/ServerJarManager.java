@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.serverwrapper;
+package io.github.teamdevintia.round2.serverwrapper.server;
 
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 
@@ -38,5 +38,9 @@ public class ServerJarManager {
         }
 
         throw new ServerJarNotFoundException(serverMod, serverVersion);
+    }
+
+    public File getFile(ServerJar jar) {
+        return new File(repo, jar.getFile().getName());
     }
 }

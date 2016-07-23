@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.serverwrapper;
+package io.github.teamdevintia.round2.serverwrapper.server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,11 @@ public class ServerJavaOps {
 
     private int ram;
     private boolean useAikarFlags;
+
+    public ServerJavaOps(int ram, boolean useAikarFlags) {
+        this.ram = ram;
+        this.useAikarFlags = useAikarFlags;
+    }
 
     public List<String> getFlags() {
         List<String> flags = new ArrayList<>();

@@ -1,7 +1,7 @@
 package io.github.teamdevintia.round2.serverwrapper.exceptions;
 
-import io.github.teamdevintia.round2.serverwrapper.ServerMod;
-import io.github.teamdevintia.round2.serverwrapper.ServerVersion;
+import io.github.teamdevintia.round2.serverwrapper.server.ServerMod;
+import io.github.teamdevintia.round2.serverwrapper.server.ServerVersion;
 
 /**
  * Created by Martin on 23.07.2016.

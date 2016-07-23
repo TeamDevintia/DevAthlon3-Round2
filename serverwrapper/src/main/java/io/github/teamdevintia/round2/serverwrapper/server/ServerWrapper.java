@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.serverwrapper;
+package io.github.teamdevintia.round2.serverwrapper.server;
 
 import lombok.Getter;
 import lombok.extern.java.Log;
@@ -28,6 +28,14 @@ public class ServerWrapper {
         this.root = root;
         servers = new ArrayList<>();
 
+        // shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                stopServers();
+            }
+        });
+
         // load jars
         jarManager = new ServerJarManager(new File(root, "repo"));
         jarManager.init();
@@ -35,6 +43,13 @@ public class ServerWrapper {
         log.info("Found " + loaded + " ServerJars in repo " + jarManager.getRepo());
     }
 
+    public void stopServers() {
+        servers.stream().filter(Server::isRunning).forEach(server -> server.getThread().stopServer());
+    }
+
+    public void addServer(Server server) {
+        servers.add(server);
+    }
 
     public static ServerWrapper getInstance() {
         return INSTANCE;
