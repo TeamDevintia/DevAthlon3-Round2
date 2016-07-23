@@ -12,6 +12,7 @@
         <module>serverwrapper</module>
         <module>network</module>
         <module>bungee</module>
+        <module>bukkit</module>
     </modules>
 
 
