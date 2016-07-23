@@ -4,21 +4,28 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Handles a server list ping
+ *
+ * @author MiniDigger
  */
 public class ResponderThread extends Thread {
 
-    String version = "1.8.7";
-    int protocol = 47;
-    int maxPlayer = 0;
-    int numPlayer = 0;
-    String motd = "Hello World";
-    Socket socket;
+    private String version = "1.8.7";
+    private int protocol = 47;
+    private int maxPlayer = 0;
+    private int numPlayer = 0;
+    private String motd = "Hello World";
+    private Socket socket;
 
-    public ResponderThread(Socket s, String awayMessage, String numplayers, String maxplayers, String reportedVersionNumber, String motdMessage) {
-        socket = s;
+    public ResponderThread(String reportedVersionNumber, int prot, int maxplayers, int numplayers, String motdMessage, Socket s) {
+        this.version = reportedVersionNumber;
+        this.protocol = prot;
+        this.maxPlayer = maxplayers;
+        this.numPlayer = numplayers;
+        this.socket = s;
     }
 
+    @Override
     public void run() {
         try {
             // open connection
@@ -28,7 +35,11 @@ public class ResponderThread extends Thread {
             DataInputStream in = new DataInputStream(inputStream);
 
             byte status = in.readByte();
-            System.out.println("status = " + status);
+//            System.out.println("status = " + status);
+
+            if (status != 16) {
+                return;
+            }
 
             // handle client handshake
             // packet id 0x00
@@ -36,30 +47,30 @@ public class ResponderThread extends Thread {
             // String - server address used to connect
             // Unsigned Short - port
             // varInt - nextstats, should be 1
-            System.out.println("-----handle handshake");
+//            System.out.println("-----handle handshake");
             byte packedId = in.readByte();
-            System.out.println("packedId = " + packedId);
+//            System.out.println("packedId = " + packedId);
             int protocolversion = readVarInt(in);
-            System.out.println("protocolversion = " + protocolversion);
+//            System.out.println("protocolversion = " + protocolversion);
             byte size = in.readByte(); // size of addr
             // String addr = in.skipBytes(size);
             in.skipBytes(size); // fuck you addr
             //System.out.println("addr = " + addr);
             int port = in.readUnsignedShort();
-            System.out.println("port = " + port);
+//            System.out.println("port = " + port);
             int nextState = readVarInt(in);
-            System.out.println("nextState = " + nextState);
-            System.out.println("-----done");
+//            System.out.println("nextState = " + nextState);
+//            System.out.println("-----done");
 
             // handle request
             // read size
             // packet id 0x00, no fields
-            System.out.println("-----handle request");
+//            System.out.println("-----handle request");
             size = in.readByte();
-            System.out.println("size = " + size);
+//            System.out.println("size = " + size);
             packedId = in.readByte();
-            System.out.println("packedId = " + packedId);
-            System.out.println("-----done");
+//            System.out.println("packedId = " + packedId);
+//            System.out.println("-----done");
 
             // send response to that
             // packet id 0x00
@@ -67,32 +78,32 @@ public class ResponderThread extends Thread {
             // string json
             String response = "{\"version\":{\"name\":\"" + version + "\",\"protocol\":" + protocol + "},\"players\":{\"max\":"
                     + maxPlayer + ",\"online\":" + numPlayer + ",\"sample\":[]},\"description\":{\"text\":\"" + motd + "\"}}";
-            System.out.println("-----send response");
+//            System.out.println("-----send response");
             out.writeByte(response.length() + 2);
             out.writeByte(0); // packet id
 
-            System.out.println("response = " + response);
+//            System.out.println("response = " + response);
             out.writeByte(response.length());
             out.writeBytes(response);
-            System.out.println("-----done");
+//            System.out.println("-----done");
 
             // handle ping
             // packet id 0x01
             // long - random payload, who cares
-            System.out.println("-----handle ping");
+//            System.out.println("-----handle ping");
             packedId = in.readByte();
-            System.out.println("packedId = " + packedId);
+//            System.out.println("packedId = " + packedId);
             long payload = in.readLong();
-            System.out.println("payload = " + payload);
-            System.out.println("-----done");
+//            System.out.println("payload = " + payload);
+//            System.out.println("-----done");
 
             // send pong
             // packet id 0x01
             // long - same payload
-            System.out.println("-----send pong");
+//            System.out.println("-----send pong");
             out.writeByte(1); // packet id
             out.writeLong(payload);
-            System.out.println("-----done");
+//            System.out.println("-----done");
 
             socket.close();
         } catch (Exception ex) {

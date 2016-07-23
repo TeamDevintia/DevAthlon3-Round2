@@ -1,5 +1,6 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
 import lombok.Getter;
 import lombok.extern.java.Log;
 
@@ -20,6 +21,7 @@ public class ServerWrapper {
     //TODO we need to remove the servers at some point
     private List<Server> servers;
     private ServerJarManager jarManager;
+    private PlaceHolderHandler placeHolderHandler;
     private File root;
 
     public ServerWrapper() {
@@ -40,6 +42,7 @@ public class ServerWrapper {
             @Override
             public void run() {
                 stopServers();
+                placeHolderHandler.removeAll();
             }
         });
 
@@ -48,6 +51,8 @@ public class ServerWrapper {
         jarManager.init();
         long loaded = jarManager.checkAvailability();
         log.info("Found " + loaded + " ServerJars in repo " + jarManager.getRepo());
+
+        placeHolderHandler = new PlaceHolderHandler();
     }
 
     /**

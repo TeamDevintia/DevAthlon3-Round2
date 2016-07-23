@@ -1,7 +1,7 @@
 package io.github.teamdevintia.round2.serverwrapper.commands;
 
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
-import io.github.teamdevintia.round2.serverwrapper.placeholder.MCSignOnDoor;
+import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderBuilder;
 import io.github.teamdevintia.round2.serverwrapper.server.*;
 import lombok.extern.java.Log;
 
@@ -42,7 +42,9 @@ public class CommandLineCommandHandler {
                         }
                         break;
                     case "mcsignondoor":
-                        new MCSignOnDoor(40000, "Gone Fishin' Back in Five Minutes", "0", "0", "Offline", "Gone Fishin' Back in Five Minutes\nServer is offline").start();
+                        new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
+                                version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
+                        break;
                     case "stop":
                         log.info("stopping servers");
                         ServerWrapper.getInstance().stopServers();
