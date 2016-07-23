@@ -7,8 +7,14 @@ import io.netty.buffer.ByteBuf;
  */
 public abstract class Packet<T> {
 
+    /**
+     * The id of the packet
+     */
     public abstract int getPacketID();
 
+    /**
+     * The direction where the packet will be sent to
+     */
     public abstract EnumPacketDirection getPacketDirection();
 
     public abstract void write(ByteBuf byteBuf);

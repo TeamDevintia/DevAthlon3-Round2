@@ -5,7 +5,8 @@ package io.github.teamdevintia.round2.network.packet;
  */
 public enum  EnumPacketDirection {
 
-    INBOUND,
-    OUTBOUND
+    WRAPPER,
+    PROXY,
+    CLIENT
 
 }

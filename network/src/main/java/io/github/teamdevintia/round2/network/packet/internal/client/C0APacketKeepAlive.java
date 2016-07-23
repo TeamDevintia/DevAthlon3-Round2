@@ -6,6 +6,10 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author Shad0wCore
+ *         Represents a packet which will send the client to the proxy
+ *         to confirm that the proxy is still online
+ *
+ *         For more see the JavaDocs at {@link Packet}
  */
 public class C0APacketKeepAlive extends Packet {
 
@@ -14,7 +18,7 @@ public class C0APacketKeepAlive extends Packet {
     }
 
     public EnumPacketDirection getPacketDirection() {
-        return null;
+        return EnumPacketDirection.PROXY;
     }
 
     public void write(ByteBuf byteBuf) {

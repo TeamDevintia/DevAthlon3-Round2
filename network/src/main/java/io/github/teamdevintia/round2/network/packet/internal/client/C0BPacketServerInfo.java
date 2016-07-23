@@ -6,6 +6,10 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author Shad0wCore
+ *         Represents a packet which will send the client to the proxy
+ *         to require the informations about a server
+ *
+ *         For more see the JavaDocs at {@link Packet}
  */
 public class C0BPacketServerInfo extends Packet {
 

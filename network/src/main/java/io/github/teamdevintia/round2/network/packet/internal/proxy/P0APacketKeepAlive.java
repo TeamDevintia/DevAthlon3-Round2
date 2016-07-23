@@ -6,6 +6,10 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author Shad0wCore
+ *         Represents a packet which will send the proxy to the client or
+ *         wrapper to confirm that the proxy is still online
+ *
+ *         For more see the JavaDocs at {@link Packet}
  */
 public class P0APacketKeepAlive extends Packet {
 

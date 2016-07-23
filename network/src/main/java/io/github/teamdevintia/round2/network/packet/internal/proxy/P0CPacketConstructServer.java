@@ -6,12 +6,8 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author Shad0wCore
- *         Represents a packet which will send the proxy to the client
- *         to return the required informations
- *
- *         For more see the JavaDocs at {@link Packet}
  */
-public class P0BPacketServerInfo extends Packet {
+public class P0CPacketConstructServer extends Packet{
 
     public int getPacketID() {
         return 0;
@@ -27,6 +23,6 @@ public class P0BPacketServerInfo extends Packet {
 
     public void read(ByteBuf byteBuf) {
 
-    }
 
+    }
 }

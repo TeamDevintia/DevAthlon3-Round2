@@ -6,6 +6,10 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author Shad0wCore
+ *         Represents a packet which will send the proxy to the wrapper
+ *         to create a server with given informations
+ *
+ *         For more see the JavaDocs at {@link Packet}
  */
 public class W0BPacketConstructServer extends Packet {
 
