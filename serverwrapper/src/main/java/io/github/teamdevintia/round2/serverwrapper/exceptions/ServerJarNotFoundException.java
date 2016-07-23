@@ -4,7 +4,9 @@ import io.github.teamdevintia.round2.serverwrapper.server.ServerMod;
 import io.github.teamdevintia.round2.serverwrapper.server.ServerVersion;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Thrown when something tries to load a server jar which is not registered in the repo.
+ *
+ * @author MiniDigger
  */
 public class ServerJarNotFoundException extends Exception {
 

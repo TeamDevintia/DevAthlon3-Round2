@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Martin on 23.07.2016.
+ * A minecraft server. Stores all infos about the server configuration
+ *
+ * @author MiniDigger
  */
 @Log
 @Getter
@@ -27,6 +29,12 @@ public class Server {
     private ServerThread thread;
     private boolean running;
 
+    /**
+     * Starts the server (into a new thread)
+     *
+     * @throws ServerJarNotFoundException when a server is started with a unknown jar
+     * @throws IOException if something else goes wrong
+     */
     public void start() throws ServerJarNotFoundException, IOException {
         ServerWrapper.getInstance().addServer(this);
 

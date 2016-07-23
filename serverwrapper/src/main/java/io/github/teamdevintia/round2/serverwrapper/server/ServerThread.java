@@ -7,7 +7,9 @@ import java.io.*;
 import java.util.logging.Level;
 
 /**
- * Created by Martin on 23.07.2016.
+ * A thread for a server instance. handles in and output
+ *
+ * @author MiniDigger
  */
 @Log
 public class ServerThread extends Thread {
@@ -17,6 +19,13 @@ public class ServerThread extends Thread {
     private Process process;
     private ServerThreadCallback callback;
 
+    /**
+     * Starts the server thread
+     *
+     * @param server the server to start
+     * @param pb the process builder which process should be started
+     * @param callback the callback that gets called if this threads stops (and the underlying server)
+     */
     public ServerThread(Server server, ProcessBuilder pb, ServerThreadCallback callback) {
         this.server = server;
         this.builder = pb;
@@ -48,6 +57,11 @@ public class ServerThread extends Thread {
         }
     }
 
+    /**
+     * Sends a message into the console of the server
+     *
+     * @param message the message to send
+     */
     public void sendMessage(String message) {
         try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))) {
             pw.println(message);
@@ -56,10 +70,17 @@ public class ServerThread extends Thread {
         }
     }
 
+    /**
+     * Stops this server (send stop into console)
+     */
     public void stopServer() {
         sendMessage("stop");
     }
 
+    /**
+     * redirects some thream somewhere
+     * @author spigotmc
+     */
     @RequiredArgsConstructor
     private static class StreamRedirector implements Runnable {
 

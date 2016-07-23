@@ -6,7 +6,9 @@ import lombok.Getter;
 import java.io.File;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Represents a server jar
+ *
+ * @author MiniDigger
  */
 @Getter
 @AllArgsConstructor

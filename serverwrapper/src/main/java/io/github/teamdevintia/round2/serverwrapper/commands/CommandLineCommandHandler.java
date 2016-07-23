@@ -10,7 +10,9 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Handles the commands for interactive mode
+ *
+ * @author MiniDigger
  */
 @Log
 public class CommandLineCommandHandler {
@@ -21,6 +23,9 @@ public class CommandLineCommandHandler {
         run();
     }
 
+    /**
+     * Main method, halts the main thread
+     */
     public void run() {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String buffer;

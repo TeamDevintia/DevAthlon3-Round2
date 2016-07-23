@@ -1,7 +1,10 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Holds all supported server versions<br>
+ * These follow the nms version schema because there is really no point to not run on the latest build of an nms version
+ *
+ * @author MiniDigger
  */
 public enum ServerVersion {
     v1_10_R1,

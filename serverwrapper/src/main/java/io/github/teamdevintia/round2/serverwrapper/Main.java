@@ -11,13 +11,20 @@ import java.io.File;
 import java.util.logging.*;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Entry point
+ *
+ * @author MiniDigger
  */
 @Log
 public class Main {
 
     public static boolean running = true;
 
+    /**
+     * Entry point
+     *
+     * @param args the args. see documentation for more infos on supported parameters
+     */
     public static void main(String[] args) {
         //TODO fix logging
         Logger global = LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -52,8 +59,8 @@ public class Main {
 
         if (interactive) {
             new CommandLineCommandHandler();
-        }else{
-            while (running){
+        } else {
+            while (running) {
 
             }
         }

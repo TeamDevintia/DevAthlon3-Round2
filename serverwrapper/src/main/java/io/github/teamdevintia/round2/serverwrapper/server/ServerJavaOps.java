@@ -4,18 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Martin on 23.07.2016.
+ * Holds all java startup options and flags.<br>
+ * mainly ram, because there is no point in not used aikar's mcflags
+ *
+ * @author MiniDigger
  */
 public class ServerJavaOps {
 
     private int ram;
     private boolean useAikarFlags;
 
+    /**
+     * @param ram           the amount of ram to use, in MB!
+     * @param useAikarFlags if aikar's mc flags should be used
+     */
     public ServerJavaOps(int ram, boolean useAikarFlags) {
         this.ram = ram;
         this.useAikarFlags = useAikarFlags;
     }
 
+    /**
+     * @return the builed flags
+     */
     public List<String> getFlags() {
         List<String> flags = new ArrayList<>();
 
