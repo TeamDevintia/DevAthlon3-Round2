@@ -26,14 +26,9 @@ public class Main {
      * @param args the args. see documentation for more infos on supported parameters
      */
     public static void main(String[] args) {
-        //TODO fix logging
-        Logger global = LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME);
-        global.setLevel(Level.FINE);
-        global.addHandler(new ConsoleHandler());
-        for (Handler handler : global.getHandlers()) {
-            if (handler instanceof ConsoleHandler) {
-                handler.setFormatter(new LogFormatter());
-            }
+        Logger rootlog = Logger.getLogger("");
+        for (Handler h : rootlog.getHandlers()){
+            h.setFormatter(new LogFormatter());
         }
 
         log.info("Loading ServerWrapper....");

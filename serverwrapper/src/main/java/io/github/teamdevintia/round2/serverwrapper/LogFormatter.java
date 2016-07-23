@@ -26,7 +26,6 @@ public class LogFormatter extends Formatter {
      * @return a formatted log record
      */
     public synchronized String format(LogRecord record) {
-        System.out.println("use custom format");
         StringBuilder sb = new StringBuilder();
 
         // Minimize memory allocations here.
