@@ -18,6 +18,7 @@ public class ServerThread extends Thread {
     private Server server;
     private Process process;
     private ServerThreadCallback callback;
+    private PrintWriter pw;
 
     /**
      * Starts the server thread
@@ -39,7 +40,6 @@ public class ServerThread extends Thread {
     public void run() {
         try {
             process = builder.start();
-            System.out.println(builder.command());
             log.info("Starting server " + server.getName());
         } catch (IOException e) {
             log.log(Level.SEVERE, "Could not start server " + server.getName() + "!", e);
@@ -48,6 +48,9 @@ public class ServerThread extends Thread {
         // redirect input and error to sout and serr
         new Thread(new StreamRedirector(process.getInputStream(), System.out, server.getName())).start();
         new Thread(new StreamRedirector(process.getErrorStream(), System.err, server.getName())).start();
+
+        // start print writer to send commands
+        pw = new PrintWriter(new OutputStreamWriter(process.getOutputStream()));
 
         try {
             int result = process.waitFor();
@@ -64,8 +67,9 @@ public class ServerThread extends Thread {
      * @param message the message to send
      */
     public void sendMessage(String message) {
-        try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))) {
+        try {
             pw.println(message);
+            pw.flush();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Error while sending command " + message + " to " + server.getName(), e);
         }
@@ -100,7 +104,11 @@ public class ServerThread extends Thread {
             try {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    if (ServerWrapper.getInstance().getCommandHandler() != null && ServerWrapper.getInstance().getCommandHandler().isAttached(prefix)) {
+                    if (ServerWrapper.getInstance().getCommandHandler() != null) {
+                        if (ServerWrapper.getInstance().getCommandHandler().isAttached(prefix)) {
+                            out.println(prefix + " " + line);
+                        }
+                    } else {
                         out.println(prefix + " " + line);
                     }
                 }

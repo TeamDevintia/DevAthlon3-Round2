@@ -30,6 +30,9 @@ public class ServerWrapper {
     private File root;
 
     public ServerWrapper() {
+        if (INSTANCE != null) {
+            throw new IllegalStateException("ServerWrapper is a singleton!");
+        }
         INSTANCE = this;
     }
 

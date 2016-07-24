@@ -27,6 +27,7 @@ public class Main {
      * @param args the args. see documentation for more infos on supported parameters
      */
     public static void main(String[] args) {
+        // setup logger
         Logger rootlog = Logger.getLogger("");
         for (Handler h : rootlog.getHandlers()) {
             h.setFormatter(new LogFormatter());
@@ -38,24 +39,27 @@ public class Main {
         //new startup options
         OptionSpec<String> rootFolderFlag = parser.accepts("root").withRequiredArg().defaultsTo(new File(".").getAbsolutePath());
         OptionSpec<Void> interactiveFlag = parser.accepts("interactive");
+        OptionSpec<Void> debugFlag = parser.accepts("debug");
 
         // parse it
         OptionSet options = parser.parse(args);
 
         File root = new File(options.valueOf(rootFolderFlag));
         boolean interactive = options.has(interactiveFlag);
+        LogFormatter.debug = options.has(debugFlag);
 
         log.info("Options parsed!");
         log.info("Starting wrapper...");
 
         ServerWrapper wrapper = new ServerWrapper();
+        if (interactive) {
+            wrapper.setCommandHandler(new CommandLineCommandHandler());
+        }
         wrapper.init(root);
 
         log.info("Wrapper started!");
 
-        if (interactive) {
-            wrapper.setCommandHandler(new CommandLineCommandHandler());
-        } else {
+        if (!interactive) {
             // keep alive
             while (running) {
 

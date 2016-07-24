@@ -61,9 +61,8 @@ public class Server {
 
         // copy over plugin
         File plugins = new File(serverFolder, "plugins");
-        System.out.println(plugins.getAbsolutePath());
         if (!plugins.exists()) {
-            System.out.println("mkdirs " + plugins.mkdirs());
+            plugins.mkdirs();
         }
 
         if (serverMod == ServerMod.BUNGEE) {

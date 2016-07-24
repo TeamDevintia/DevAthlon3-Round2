@@ -20,14 +20,15 @@ import java.util.logging.Level;
  * @author MiniDigger
  */
 @Log
-public class CommandLineCommandHandler {
+public class CommandLineCommandHandler extends Thread {
 
     private Map<String, Command> commands = new HashMap<>();
     private List<String> attachedServers = new ArrayList<>();
 
     public CommandLineCommandHandler() {
         addCommands();
-        run();
+        setName("CommandHandler");
+        start();
     }
 
     /**
@@ -138,6 +139,30 @@ public class CommandLineCommandHandler {
 
             attachedServers.remove(args[1]);
             log.info("detach from session " + args[1]);
+        });
+
+        commands.put("command", args -> {
+            if (args.length < 3) {
+                log.warning("Missing arg <server> <commands ...>");
+                return;
+            }
+
+            Server server = ServerWrapper.getInstance().getServer(args[1]);
+            if (server == null) {
+                log.warning("Unknown server" + args[1]);
+                return;
+            }
+
+            if (!server.isRunning() || server.getThread() == null) {
+                log.warning("Server is not running!");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            server.getThread().sendMessage(sb.toString());
         });
 
         commands.put("mcsignondoor", args -> {
