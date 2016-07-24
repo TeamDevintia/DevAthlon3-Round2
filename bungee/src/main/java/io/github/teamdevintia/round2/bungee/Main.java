@@ -1,7 +1,7 @@
 package io.github.teamdevintia.round2.bungee;
 
-import io.github.teamdevintia.round2.network.customs.ReceiveEvent;
 import io.github.teamdevintia.round2.network.internal.EventBus;
+import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;
 import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
@@ -32,7 +32,7 @@ public class Main extends Plugin implements Listener {
     public void onEnable() {
         // init event bus
         eventBus = new EventBus();
-        eventBus.registerEvent(new io.github.teamdevintia.round2.network.internal.EventHandler(new BungeePacketListener(), () -> getLogger().info("Event called"), "BungeeEventHandler"));
+        eventBus.registerEvent(new PacketEventHandler(new BungeePacketListener(), () -> getLogger().info("Event called"), "BungeeEventHandler"));
 
         // init connection
         clientNetHandler = new ClientNetHandler(eventBus);

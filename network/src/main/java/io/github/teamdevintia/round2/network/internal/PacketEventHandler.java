@@ -3,14 +3,14 @@ package io.github.teamdevintia.round2.network.internal;
 /**
  * @author Shad0wCore
  */
-public final class EventHandler {
+public final class PacketEventHandler {
 
     private EventExecutor eventExecutor;
     private PipelineEventListener pipelineEventListener;
     private boolean ignoreCancelled;
     private String identifier;
 
-    public EventHandler(PipelineEventListener pipelineEventListener, EventExecutor eventExecutor, String identifier) {
+    public PacketEventHandler(PipelineEventListener pipelineEventListener, EventExecutor eventExecutor, String identifier) {
         this.pipelineEventListener = pipelineEventListener;
         this.eventExecutor = eventExecutor;
         this.identifier = identifier;

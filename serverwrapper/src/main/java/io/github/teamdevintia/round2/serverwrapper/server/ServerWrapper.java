@@ -1,7 +1,7 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
 import io.github.teamdevintia.round2.network.internal.EventBus;
-import io.github.teamdevintia.round2.network.internal.EventHandler;
+import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.WrapperServerNetHandler;
 import io.github.teamdevintia.round2.serverwrapper.commands.CommandLineCommandHandler;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
@@ -78,7 +78,7 @@ public class ServerWrapper {
 
         // setup packet event bus
         EventBus eventBus = new EventBus();
-        eventBus.registerEvent(new EventHandler(new ServerWrapperPacketListener(), () -> log.info("Event called"), "ServerWrapperEventHandler"));
+        eventBus.registerEvent(new PacketEventHandler(new ServerWrapperPacketListener(), () -> log.info("Event called"), "ServerWrapperEventHandler"));
 
         // startup netty
         WrapperServerNetHandler wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);

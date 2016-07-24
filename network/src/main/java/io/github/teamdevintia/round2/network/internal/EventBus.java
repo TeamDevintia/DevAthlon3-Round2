@@ -14,14 +14,14 @@ import java.util.*;
  */
 public final class EventBus {
 
-    private final Set<EventHandler> staticEventHandlers = new HashSet<>();
-    private final HashMap<String, EventHandler> definedEventHandlers = new HashMap<>();
+    private final Set<PacketEventHandler> staticEventHandlers = new HashSet<>();
+    private final HashMap<String, PacketEventHandler> definedEventHandlers = new HashMap<>();
 
-    public void registerEvent(EventHandler eventHandler) {
+    public void registerEvent(PacketEventHandler eventHandler) {
         this.staticEventHandlers.add(eventHandler);
     }
 
-    public void registerDefinedEvent(String id, EventHandler eventHandler) throws IllegalUsageException {
+    public void registerDefinedEvent(String id, PacketEventHandler eventHandler) throws IllegalUsageException {
         if (this.definedEventHandlers.get(id) != null) {
             this.definedEventHandlers.put(id, eventHandler);
         } else {
@@ -30,7 +30,7 @@ public final class EventBus {
     }
 
     public final void callEvent(Event eventClass) {
-        for (EventHandler eventHandler : staticEventHandlers) {
+        for (PacketEventHandler eventHandler : staticEventHandlers) {
             for (Method pipelineMethod : this.containsEventPipelines(eventHandler.getPipelineEventListener().getClass(), PipelineEvent.class)) {
                 try {
                     if (this.eventEquals(eventClass, pipelineMethod.getParameters())) {
