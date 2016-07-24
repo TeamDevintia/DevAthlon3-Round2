@@ -140,6 +140,30 @@ public class CommandLineCommandHandler {
             log.info("detach from session " + args[1]);
         });
 
+        commands.put("command", args -> {
+            if (args.length < 3) {
+                log.warning("Missing arg <server> <commands ...>");
+                return;
+            }
+
+            Server server = ServerWrapper.getInstance().getServer(args[1]);
+            if (server == null) {
+                log.warning("Unknown server" + args[1]);
+                return;
+            }
+
+            if (!server.isRunning() || server.getThread() == null) {
+                log.warning("Server is not running!");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            server.getThread().sendMessage(sb.toString());
+        });
+
         commands.put("mcsignondoor", args -> {
             new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
                     version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
