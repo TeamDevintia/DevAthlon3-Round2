@@ -33,4 +33,11 @@ public abstract class NetHandler {
         return this.streamHandler;
     }
 
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public StreamHandler getStreamHandler() {
+        return streamHandler;
+    }
 }
