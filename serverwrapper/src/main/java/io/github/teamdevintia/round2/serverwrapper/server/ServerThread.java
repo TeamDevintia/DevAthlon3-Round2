@@ -40,7 +40,6 @@ public class ServerThread extends Thread {
     public void run() {
         try {
             process = builder.start();
-            System.out.println(builder.command());
             log.info("Starting server " + server.getName());
         } catch (IOException e) {
             log.log(Level.SEVERE, "Could not start server " + server.getName() + "!", e);

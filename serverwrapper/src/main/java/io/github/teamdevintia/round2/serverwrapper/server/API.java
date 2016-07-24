@@ -48,7 +48,7 @@ public class API {
         nextPort++;
 
         // find a free port
-        while (ServerWrapper.getInstance().getServer(nextPort) == null) {
+        while (ServerWrapper.getInstance().getServer(nextPort) != null) {
             nextPort++;
         }
 
