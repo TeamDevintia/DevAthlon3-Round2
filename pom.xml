@@ -13,6 +13,7 @@
         <module>network</module>
         <module>bungee</module>
         <module>bukkit</module>
+        <module>client</module>
     </modules>
 
     <build>
