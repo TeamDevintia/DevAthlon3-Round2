@@ -1,0 +1,27 @@
+package io.github.teamdevintia.round2.network.internal.events;
+
+import io.github.teamdevintia.round2.network.internal.CancelableEvent;
+import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.packet.Packet;
+
+/**
+ * @author Shad0wCore
+ */
+public class PacketReceiveEvent extends CancelableEvent {
+
+    private Packet receivedPacket;
+    private EnumPacketDirection enumPacketDirection;
+
+    public PacketReceiveEvent(Packet receivedPacket) {
+        this.receivedPacket = receivedPacket;
+        this.enumPacketDirection = this.receivedPacket.getEnumPacketDirection();
+    }
+
+    public EnumPacketDirection getEnumPacketDirection() {
+        return enumPacketDirection;
+    }
+
+    public Packet getReceivedPacket() {
+        return receivedPacket;
+    }
+}
