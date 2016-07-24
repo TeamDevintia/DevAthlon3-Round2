@@ -21,9 +21,10 @@ public enum Protocol {
     STOP_SERVER_PACKET(4, StopServerPacket.class),
     STOPPED_SERVER_PACKET(44, StoppedServerPacket.class),
 
-    KEEP_ALIVE_PACKET(100, KeepAlivePacket.class),
-    KEEP_ALIVE_CONFIRMED_PACKET(1000, KeepAliveConfirmedPacket.class),
-    SERVER_INFO_PACKET(200, ServerInfoPacket.class);
+    KEEP_ALIVE_PACKET(5, KeepAlivePacket.class),
+    KEEP_ALIVE_CONFIRMED_PACKET(55, KeepAliveConfirmedPacket.class),
+
+    SERVER_INFO_PACKET(6, ServerInfoPacket.class);
 
 
     private int packetID;
