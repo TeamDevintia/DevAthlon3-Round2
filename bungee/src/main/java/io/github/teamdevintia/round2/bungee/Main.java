@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
  */
 public class Main extends Plugin implements Listener {
 
+    // TODO load these from somewhere
     private static final String IP = "127.0.0.1";
     private static final int PORT = 8000;
 

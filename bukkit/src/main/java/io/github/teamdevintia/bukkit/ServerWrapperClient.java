@@ -1,27 +1,79 @@
 package io.github.teamdevintia.bukkit;
 
+import io.github.teamdevintia.round2.network.internal.EventBus;
+import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
+import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
+import io.github.teamdevintia.round2.network.packet.ComponentPacket;
+import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.pipeline.MessageSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+/**
+ * the bukkit endpoint, mostly used to send server info packets
+ *
+ * @author MiniDigger
+ */
 public final class ServerWrapperClient extends JavaPlugin {
 
+    // TODO load these from somewhere
+    private static final String IP = "127.0.0.1";
+    private static final int PORT = 8000;
+
+    // reflection stuff
     private boolean reflectionActive = false;
     private String nmsVersion;
     private Class<?> minecraftServerClass;
     private Field recentTpsField;
     private Method getServerMethod;
 
+    private EventBus eventBus;
+    private ClientNetHandler clientNetHandler;
+
+    private String serverName;
+
     @Override
     public void onEnable() {
         initReflection();
+
+        serverName = System.getProperty("serverName");
+
+        // init event bus
+        eventBus = new EventBus();
+        eventBus.registerEvent(new PacketEventHandler(new BukkitPacketListener(), () -> getLogger().info("Event called"), "BungeeEventHandler"));
+
+        // init connection
+        clientNetHandler = new ClientNetHandler(eventBus);
+        clientNetHandler.establishConnection(IP, PORT, streamHandler -> {
+            MessageSerializer messageSerializer = new MessageSerializer("information");
+            messageSerializer.addProperty("numPlayers", 123).addProperty("maxPlayers", 234);
+            messageSerializer.addProperty("currentRam", 1024).addProperty("maxRam", 3056);
+            messageSerializer.addProperty("tps", 20).addProperty("motd", "A Minecraft Server");
+            streamHandler.handlePacket(new ComponentPacket(EnumPacketDirection.GLOBAL, messageSerializer.serialize()));
+        });
+
+        // send server info
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                sendInfoPacket();
+            }
+        }.runTaskTimer(this, 20, 20);
+    }
+
+    private void sendInfoPacket() {
+        // serverName;
+        Bukkit.getServer().getMaxPlayers();
+        Bukkit.getOnlinePlayers().size();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        getTps();
     }
 
     @Override
@@ -29,26 +81,9 @@ public final class ServerWrapperClient extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equals("mytps")) {
-            final StringBuilder sb = new StringBuilder(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: ");
-            double[] recentTps;
-            for (int length = (recentTps = getTps()).length, i = 0; i < length; ++i) {
-                final double tps = recentTps[i];
-                sb.append(this.format(tps));
-                sb.append(", ");
-            }
-            sender.sendMessage(sb.substring(0, sb.length() - 2));
-            return true;
-        }
-        return false;
-    }
-
-    private String format(final double tps) {
-        return String.valueOf(((tps > 18.0) ? ChatColor.GREEN : ((tps > 16.0) ? ChatColor.YELLOW : ChatColor.RED)).toString()) + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
-    }
-
+    /**
+     * Resolves all classes, fields and methods used to get the tps
+     */
     public void initReflection() {
         try {
             nmsVersion = Bukkit.getServer().getClass().getPackage().getName().split(Pattern.quote("."))[3];
@@ -61,6 +96,9 @@ public final class ServerWrapperClient extends JavaPlugin {
         }
     }
 
+    /**
+     * @return the last tps
+     */
     public double[] getTps() {
         if (reflectionActive) {
             try {
