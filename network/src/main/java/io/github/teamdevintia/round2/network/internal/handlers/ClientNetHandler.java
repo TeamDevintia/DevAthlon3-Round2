@@ -21,8 +21,6 @@ import lombok.Getter;
 @Getter
 public class ClientNetHandler extends NetHandler {
 
-    private EventBus eventBus;
-
     public ClientNetHandler(EventBus eventBus) {
         super(eventBus);
     }

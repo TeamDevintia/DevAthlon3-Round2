@@ -6,10 +6,12 @@ import io.github.teamdevintia.round2.network.pipeline.PipelineEncoder;
 import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.LengthFieldPrepender;
+import lombok.Getter;
 
 /**
  * @author Shad0wCore
  */
+@Getter
 public abstract class NetHandler {
 
     protected EventBus eventBus;
