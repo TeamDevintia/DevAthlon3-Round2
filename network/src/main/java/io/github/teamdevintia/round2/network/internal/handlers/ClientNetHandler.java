@@ -3,7 +3,6 @@ package io.github.teamdevintia.round2.network.internal.handlers;
 import io.github.teamdevintia.round2.network.Callback;
 import io.github.teamdevintia.round2.network.NetHandler;
 import io.github.teamdevintia.round2.network.internal.EventBus;
-import io.github.teamdevintia.round2.network.Packet;
 import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -22,16 +21,10 @@ import lombok.Getter;
 @Getter
 public class ClientNetHandler extends NetHandler {
 
-    private StreamHandler streamHandler;
     private EventBus eventBus;
 
     public ClientNetHandler(EventBus eventBus) {
         super(eventBus);
-    }
-
-    @Override
-    public void addToSendQueue(Packet packet) {
-        this.streamHandler.handlePacket(packet);
     }
 
     @Override
@@ -45,7 +38,8 @@ public class ClientNetHandler extends NetHandler {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel channel) throws Exception {
-                            handlerCallback.trigger(preparePipeline(channel));
+                            streamHandler = preparePipeline(channel);
+                            handlerCallback.trigger(streamHandler);
                         }
                     }).connect(host, port).sync().channel();
         } catch (InterruptedException e) {

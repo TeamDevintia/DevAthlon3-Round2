@@ -7,30 +7,33 @@ import io.github.teamdevintia.round2.network.pipeline.PipelineEncoder;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.LengthFieldPrepender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Shad0wCore
  */
 public abstract class ServerNetHandler {
 
     protected EventBus eventBus;
-    protected StreamHandler streamHandler;
+    protected List<StreamHandler> streamHandlers = new ArrayList<>();
 
     public ServerNetHandler(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 
     public void addToSendQueue(Packet packet) {
-        this.streamHandler.handlePacket(packet);
+        this.streamHandlers.forEach(streamHandler -> streamHandler.handlePacket(packet));
     }
 
     public abstract void establishServerConnection(String host, int port,  Callback<StreamHandler> handlerCallback);
 
     public final StreamHandler preparePipeline(Channel channel) {
-        this.streamHandler = new StreamHandler(this.eventBus);
+        StreamHandler streamHandler = new StreamHandler(this.eventBus);
         channel.pipeline().addLast(new LengthFieldPrepender(4, true))
                 .addLast(new PipelineDecoder(this.eventBus)).addLast(new PipelineEncoder(this.eventBus))
-                .addLast(this.streamHandler);
-        return this.streamHandler;
+                .addLast(streamHandler);
+        return streamHandler;
     }
 
 }
