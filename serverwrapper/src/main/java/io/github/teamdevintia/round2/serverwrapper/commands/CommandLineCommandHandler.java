@@ -8,7 +8,9 @@ import lombok.extern.java.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -21,6 +23,7 @@ import java.util.logging.Level;
 public class CommandLineCommandHandler {
 
     private Map<String, Command> commands = new HashMap<>();
+    private List<String> attachedServers = new ArrayList<>();
 
     public CommandLineCommandHandler() {
         addCommands();
@@ -117,27 +120,30 @@ public class CommandLineCommandHandler {
             log.info("Server deleted");
         });
 
-        commands.put("startdevserver", (args -> {
-            Server server = new ServerBuilder("DevServer").port(3333).javaOps(new ServerJavaOps(1024, false)).mod(ServerMod.SPIGOT).version(ServerVersion.v1_10_R1).build();
-            try {
-                server.start();
-            } catch (ServerJarNotFoundException e) {
-                log.log(Level.ALL, "Could not find server jar", e);
-            } catch (IOException e) {
-                e.printStackTrace();
+        commands.put("attach", args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <prefix>");
+                return;
             }
-        }
 
-        ));
+            attachedServers.add(args[1]);
+            log.info("Attached to session " + args[1]);
+        });
 
-        commands.put("mcsignondoor", args ->
+        commands.put("detach", args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <prefix>");
+                return;
+            }
 
-                {
-                    new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
-                            version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
-                }
+            attachedServers.remove(args[1]);
+            log.info("detach from session " + args[1]);
+        });
 
-        );
+        commands.put("mcsignondoor", args -> {
+            new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
+                    version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
+        });
     }
 
     /**
@@ -178,5 +184,15 @@ public class CommandLineCommandHandler {
         }
 
         return server;
+    }
+
+    /**
+     * Checks if a server session is attached and should be printed to the console
+     *
+     * @param prefix the prefix of the server session
+     * @return if the server session is attached and should be printed to the console
+     */
+    public boolean isAttached(String prefix) {
+        return attachedServers.contains(prefix);
     }
 }

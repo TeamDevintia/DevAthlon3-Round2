@@ -8,7 +8,8 @@ import joptsimple.OptionSpec;
 import lombok.extern.java.Log;
 
 import java.io.File;
-import java.util.logging.*;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 /**
  * Entry point
@@ -27,7 +28,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Logger rootlog = Logger.getLogger("");
-        for (Handler h : rootlog.getHandlers()){
+        for (Handler h : rootlog.getHandlers()) {
             h.setFormatter(new LogFormatter());
         }
 
@@ -53,8 +54,9 @@ public class Main {
         log.info("Wrapper started!");
 
         if (interactive) {
-            new CommandLineCommandHandler();
+            wrapper.setCommandHandler(new CommandLineCommandHandler());
         } else {
+            // keep alive
             while (running) {
 
             }

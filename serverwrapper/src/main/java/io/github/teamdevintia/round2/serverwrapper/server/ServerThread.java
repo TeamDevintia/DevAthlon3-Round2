@@ -45,6 +45,7 @@ public class ServerThread extends Thread {
             log.log(Level.SEVERE, "Could not start server " + server.getName() + "!", e);
         }
 
+        // redirect input and error to sout and serr
         new Thread(new StreamRedirector(process.getInputStream(), System.out, server.getName())).start();
         new Thread(new StreamRedirector(process.getErrorStream(), System.err, server.getName())).start();
 
@@ -84,7 +85,7 @@ public class ServerThread extends Thread {
     /**
      * redirects some thream somewhere
      *
-     * @author spigotmc
+     * @author spigotmc, MiniDigger
      */
     @RequiredArgsConstructor
     private static class StreamRedirector implements Runnable {
@@ -99,7 +100,9 @@ public class ServerThread extends Thread {
             try {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    out.println(prefix + " " + line);
+                    if (ServerWrapper.getInstance().getCommandHandler() != null && ServerWrapper.getInstance().getCommandHandler().isAttached(prefix)) {
+                        out.println(prefix + " " + line);
+                    }
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();

@@ -1,5 +1,6 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.serverwrapper.commands.CommandLineCommandHandler;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
 import lombok.Getter;
@@ -22,10 +23,10 @@ public class ServerWrapper {
 
     private static ServerWrapper INSTANCE;
     private Server bungee;
-    //TODO we need to remove the servers at some point
     private List<Server> servers;
     private ServerJarManager jarManager;
     private PlaceHolderHandler placeHolderHandler;
+    private CommandLineCommandHandler commandHandler;
     private File root;
 
     public ServerWrapper() {
@@ -133,4 +134,17 @@ public class ServerWrapper {
     }
 
 
+    /**
+     * @return the command handler for this wrapper
+     */
+    public CommandLineCommandHandler getCommandHandler() {
+        return commandHandler;
+    }
+
+    /**
+     * @param commandHandler the commandline handler this wrapper should use
+     */
+    public void setCommandHandler(CommandLineCommandHandler commandHandler) {
+        this.commandHandler = commandHandler;
+    }
 }
