@@ -7,11 +7,11 @@ import io.netty.channel.Channel;
 /**
  * @author Shad0wCore
  */
-public interface NetHandler {
+public interface ServerNetHandler {
 
     void addToSendQueue(Packet packet);
 
-    void establishConnection(String host, int port,  Callback<StreamHandler> handlerCallback);
+    void establishServerConnection(String host, int port,  Callback<StreamHandler> handlerCallback);
 
     StreamHandler preparePipeline(Channel channel);
 

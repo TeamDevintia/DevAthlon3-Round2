@@ -16,7 +16,6 @@ public class PipelineDecoder extends ByteToMessageDecoder {
 
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         Class<? extends Packet> translatedPacketClass = Protocol.packetViaID(PacketUtil.readPacketID(byteBuf));
-        System.out.println("Test");
         if (translatedPacketClass != null) {
             Packet transformedPacket = translatedPacketClass.newInstance();
             transformedPacket.read(byteBuf);
