@@ -5,6 +5,7 @@ import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.WrapperServerNetHandler;
 import io.github.teamdevintia.round2.network.packet.CreatedServerPacket;
+import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
 import io.github.teamdevintia.round2.serverwrapper.commands.CommandLineCommandHandler;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
@@ -14,7 +15,9 @@ import lombok.extern.java.Log;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 /**
@@ -42,6 +45,7 @@ public class ServerWrapper {
     // packet stuff
     private WrapperServerNetHandler wrapperServerNetHandler;
     private EventBus eventBus;
+    private Set<StreamHandler> streamHandlers = new HashSet<>();
 
     public ServerWrapper() {
         if (INSTANCE != null) {
@@ -89,7 +93,10 @@ public class ServerWrapper {
 
         // startup netty
         wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);
-        wrapperServerNetHandler.establishServerConnection(IP, PORT, streamHandler -> log.info("Channel established"));
+        wrapperServerNetHandler.establishServerConnection(IP, PORT, streamHandler -> {
+            log.info("Channel established");
+            streamHandlers.add(streamHandler);
+        });
 
         // start bungee
         try {
@@ -188,6 +195,6 @@ public class ServerWrapper {
      * @param packet the packet to be send
      */
     public void sendPacket(Packet packet) {
-        wrapperServerNetHandler.addToSendQueue(packet);
+        streamHandlers.forEach(streamHandler -> streamHandler.handlePacket(packet));
     }
 }

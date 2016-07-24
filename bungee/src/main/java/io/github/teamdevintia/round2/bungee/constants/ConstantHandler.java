@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * @author Shad0wCore
+ * //TODO unused
  */
 public abstract class ConstantHandler<T> {
 

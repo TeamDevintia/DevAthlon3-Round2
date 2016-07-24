@@ -1,12 +1,9 @@
 package io.github.teamdevintia.bukkit;
 
-import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
-import io.github.teamdevintia.round2.network.packet.ComponentPacket;
 import io.github.teamdevintia.round2.network.packet.ServerInfoPacket;
-import io.github.teamdevintia.round2.network.pipeline.MessageSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -51,13 +48,7 @@ public final class ServerWrapperClient extends JavaPlugin {
 
         // init connection
         clientNetHandler = new ClientNetHandler(eventBus);
-        clientNetHandler.establishConnection(IP, PORT, streamHandler -> {
-            MessageSerializer messageSerializer = new MessageSerializer("information");
-            messageSerializer.addProperty("numPlayers", 123).addProperty("maxPlayers", 234);
-            messageSerializer.addProperty("currentRam", 1024).addProperty("maxRam", 3056);
-            messageSerializer.addProperty("tps", 20).addProperty("motd", "A Minecraft Server");
-            streamHandler.handlePacket(new ComponentPacket(EnumPacketDirection.GLOBAL, messageSerializer.serialize()));
-        });
+        clientNetHandler.establishConnection(IP, PORT, streamHandler -> getLogger().info("Channel established"));
 
         // send server info
         new BukkitRunnable() {
