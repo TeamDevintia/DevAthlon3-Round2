@@ -3,11 +3,17 @@ package io.github.teamdevintia.round2.network.packet;
 import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.Packet;
 import io.netty.buffer.ByteBuf;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author Shad0wCore
  */
+@Getter
+@AllArgsConstructor
 public class StopServerPacket extends Packet {
+
+    private String name;
 
     @Override
     public void write(ByteBuf byteBuf) {
