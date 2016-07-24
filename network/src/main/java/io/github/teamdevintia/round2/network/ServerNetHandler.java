@@ -2,7 +2,6 @@ package io.github.teamdevintia.round2.network;
 
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
-import io.github.teamdevintia.round2.network.packet.Packet;
 import io.github.teamdevintia.round2.network.pipeline.PipelineDecoder;
 import io.github.teamdevintia.round2.network.pipeline.PipelineEncoder;
 import io.netty.channel.Channel;

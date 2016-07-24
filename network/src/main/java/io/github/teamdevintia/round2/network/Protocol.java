@@ -1,7 +1,6 @@
 package io.github.teamdevintia.round2.network;
 
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;
-import io.github.teamdevintia.round2.network.packet.Packet;
 
 /**
  * @author Shad0wCore

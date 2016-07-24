@@ -1,5 +1,7 @@
 package io.github.teamdevintia.round2.network.packet;
 
+import io.github.teamdevintia.round2.network.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.Packet;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.charset.Charset;

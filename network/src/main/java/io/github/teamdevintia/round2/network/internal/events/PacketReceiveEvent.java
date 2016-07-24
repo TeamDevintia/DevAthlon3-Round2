@@ -1,8 +1,8 @@
 package io.github.teamdevintia.round2.network.internal.events;
 
 import io.github.teamdevintia.round2.network.internal.Event;
-import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
-import io.github.teamdevintia.round2.network.packet.Packet;
+import io.github.teamdevintia.round2.network.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.Packet;
 
 /**
  * @author Shad0wCore

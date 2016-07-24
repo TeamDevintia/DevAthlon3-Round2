@@ -3,7 +3,7 @@ package io.github.teamdevintia.round2.network.internal.handlers;
 import io.github.teamdevintia.round2.network.Callback;
 import io.github.teamdevintia.round2.network.NetHandler;
 import io.github.teamdevintia.round2.network.internal.EventBus;
-import io.github.teamdevintia.round2.network.packet.Packet;
+import io.github.teamdevintia.round2.network.Packet;
 import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;

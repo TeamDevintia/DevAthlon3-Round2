@@ -4,7 +4,7 @@ import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;
-import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.pipeline.MessageSerializer;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
