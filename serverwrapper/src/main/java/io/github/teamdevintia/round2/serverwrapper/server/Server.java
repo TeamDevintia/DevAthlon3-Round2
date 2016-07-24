@@ -80,6 +80,19 @@ public class Server {
     }
 
     /**
+     * Stops (if necessary) and deletes this server's folder from the disk
+     */
+    public void delete() {
+        if (running) {
+            if (getThread() != null) {
+                getThread().stopServer();
+            }
+        }
+
+        FileUtil.deleteFileOrFolder(serverFolder.toPath());
+    }
+
+    /**
      * @return the server object for the bungeecord server
      */
     public static Server getBungee() {

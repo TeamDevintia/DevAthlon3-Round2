@@ -5,9 +5,12 @@ import lombok.extern.java.Log;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.logging.Level;
+
+import static java.nio.file.FileVisitResult.CONTINUE;
+import static java.nio.file.FileVisitResult.TERMINATE;
 
 /**
  * @author MiniDigger
@@ -18,6 +21,13 @@ public class FileUtil {
     public static final File BUNGEE = new File(ServerWrapper.getInstance().getJarManager().getRepo(), "bungee.jar");
     public static final File BUKKIT = new File(ServerWrapper.getInstance().getJarManager().getRepo(), "bungee.jar");
 
+    /**
+     * Copies a file to a dir
+     *
+     * @param jar  the file to copy
+     * @param dest the destination directory
+     * @return whether or not this action was sucessfull
+     */
     public static boolean copyPlugin(File jar, File dest) {
         try {
             Files.copy(jar.toPath(), new File(dest, jar.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -25,6 +35,44 @@ public class FileUtil {
         } catch (IOException e) {
             log.log(Level.WARNING, "Could not copy file from " + jar.getAbsolutePath() + " to " + dest.getAbsolutePath(), e);
             return false;
+        }
+    }
+
+    /**
+     * Fully deletes a file or folder
+     *
+     * @param path the path that should be deleted
+     */
+    public static void deleteFileOrFolder(final Path path) {
+        try {
+            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs)
+                        throws IOException {
+                    Files.delete(file);
+                    return CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult visitFileFailed(final Path file, final IOException e) {
+                    return handleException(e);
+                }
+
+                private FileVisitResult handleException(final IOException e) {
+                    log.log(Level.WARNING, "Error while deleting path " + path.toString(), e);
+                    return TERMINATE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(final Path dir, final IOException e)
+                        throws IOException {
+                    if (e != null) return handleException(e);
+                    Files.delete(dir);
+                    return CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            log.log(Level.WARNING, "Error while deleting path " + path.toString(), e);
         }
     }
 }
