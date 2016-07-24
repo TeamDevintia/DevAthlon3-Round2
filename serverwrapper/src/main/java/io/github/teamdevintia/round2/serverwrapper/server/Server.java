@@ -89,15 +89,17 @@ public class Server {
 
     /**
      * Stops (if necessary) and deletes this server's folder from the disk
+     *
+     * @return if the action was successful
      */
-    public void delete() {
+    public boolean delete() {
         if (running) {
             if (getThread() != null) {
                 getThread().stopServer();
             }
         }
 
-        FileUtil.deleteFileOrFolder(serverFolder.toPath());
+        return FileUtil.deleteFileOrFolder(serverFolder.toPath());
     }
 
     /**

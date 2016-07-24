@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
@@ -67,8 +69,10 @@ public class FileUtil {
      * Fully deletes a file or folder
      *
      * @param path the path that should be deleted
+     * @return if the action was successful for not
      */
-    public static void deleteFileOrFolder(final Path path) {
+    public static boolean deleteFileOrFolder(final Path path) {
+        List<Exception> errors = new ArrayList<>();
         try {
             Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
                 @Override
@@ -84,7 +88,7 @@ public class FileUtil {
                 }
 
                 private FileVisitResult handleException(final IOException e) {
-                    log.log(Level.WARNING, "Error while deleting path " + path.toString(), e);
+                    errors.add(e);
                     return TERMINATE;
                 }
 
@@ -97,7 +101,9 @@ public class FileUtil {
                 }
             });
         } catch (IOException e) {
-            log.log(Level.WARNING, "Error while deleting path " + path.toString(), e);
+            errors.add(e);
         }
+
+        return errors.size() == 0;
     }
 }

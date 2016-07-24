@@ -108,7 +108,20 @@ public class API {
 
         ServerWrapper.getInstance().removeServer(server);
 
-        server.delete();
+        if (!server.delete()) {
+            log.warning("Could not delete server in the first try, retry in a few seconds!");
+
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ignored) {
+                    }
+                    server.delete();
+                }
+            }.start();
+        }
     }
 
     /**
