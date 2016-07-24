@@ -17,6 +17,9 @@ public class CreatedServerPacket extends Packet {
     private String version;
     private int port;
 
+    public CreatedServerPacket() {
+    }
+
     @Override
     public void write(ByteBuf byteBuf) {
 

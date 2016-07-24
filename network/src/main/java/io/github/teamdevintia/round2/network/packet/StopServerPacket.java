@@ -1,6 +1,5 @@
 package io.github.teamdevintia.round2.network.packet;
 
-import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.Packet;
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
@@ -14,6 +13,9 @@ import lombok.Getter;
 public class StopServerPacket extends Packet {
 
     private String name;
+
+    public StopServerPacket() {
+    }
 
     @Override
     public void write(ByteBuf byteBuf) {

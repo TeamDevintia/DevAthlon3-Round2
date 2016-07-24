@@ -14,6 +14,9 @@ public class StoppedServerPacket extends Packet {
 
     private String name;
 
+    public StoppedServerPacket() {
+    }
+
     @Override
     public void write(ByteBuf byteBuf) {
 

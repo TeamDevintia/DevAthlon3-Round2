@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 /**
  * @author Shad0wCore
  */
+@Deprecated
 public class ComponentPacket extends Packet {
 
     private String message;
@@ -26,8 +27,6 @@ public class ComponentPacket extends Packet {
         byte[] messageBytes = this.message.getBytes(Charset.forName("UTF-8"));
         byteBuf.writeInt(messageBytes.length);
         byteBuf.writeBytes(messageBytes);
-        byteBuf.writeInt(enumPacketDirection.name().length());
-        byteBuf.writeBytes(enumPacketDirection.name().getBytes(Charset.forName("UTF-8")));
     }
 
     public void read(ByteBuf byteBuf) {
@@ -35,10 +34,6 @@ public class ComponentPacket extends Packet {
         byte[] messageBytes = new byte[byteLength];
         byteBuf.readBytes(messageBytes);
         this.message = new String(messageBytes, Charset.forName("UTF-8"));
-        byteLength = byteBuf.readInt();
-        messageBytes = new byte[byteLength];
-        byteBuf.readBytes(messageBytes);
-        this.enumPacketDirection = EnumPacketDirection.valueOf(new String(messageBytes, Charset.forName("UTF-8")));
     }
 
     public String getMessage() {

@@ -14,6 +14,9 @@ public class DeletedServerPacket extends Packet {
 
     private String name;
 
+    public DeletedServerPacket() {
+    }
+
     @Override
     public void write(ByteBuf byteBuf) {
 
