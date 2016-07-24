@@ -85,6 +85,7 @@ public class Main extends Plugin implements Listener {
 
             // wait till new server is started up
             try {
+                // TODO make this editable via config
                 Thread.sleep(20000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
