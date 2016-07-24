@@ -89,7 +89,7 @@ public class ServerWrapper {
 
         // setup packet event bus
         EventBus eventBus = new EventBus();
-        eventBus.registerEvent(new PacketEventHandler(new ServerWrapperPacketListener(), () -> log.info("Event called"), "ServerWrapperEventHandler"));
+        eventBus.registerEvent(new PacketEventHandler(new ServerWrapperPacketListener(), Server::getBungee, "ServerWrapperEventHandler"));
 
         // startup netty
         wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);
