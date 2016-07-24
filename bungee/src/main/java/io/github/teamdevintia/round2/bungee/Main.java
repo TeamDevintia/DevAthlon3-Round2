@@ -76,22 +76,28 @@ public class Main extends Plugin implements Listener {
         ServerInfo info = ProxyServer.getInstance().getServerInfo(subdomain);
         if (info != null) {
             // we got a server already
-            System.out.println("we got a server with " + subdomain + ", go connect to that");
+            getLogger().info("we got a server with " + subdomain + ", go connect to that " + event.getPlayer().getName());
             event.getPlayer().connect(info);
         } else {
             // we need to start a new one!
-            // TODO join to a new server
-            System.out.println("we need to spin up a new server " + subdomain + ", you gotta wait");
-            //  sendStartServerPacket(subdomain);
+            getLogger().info("we need to spin up a new server " + subdomain + ", you gotta wait " + event.getPlayer().getName());
+            sendStartServerPacket(subdomain);
 
-            System.out.println("lets sleep for a bit");
             // wait till new server is started up
             try {
-                Thread.sleep(10000);
+                Thread.sleep(20000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("done sleeping");
+
+            info = ProxyServer.getInstance().getServerInfo(subdomain);
+            if (info == null) {
+                getLogger().warning("Could not create server! Try again!");
+                event.getPlayer().disconnect(new TextComponent("Could not create server! Try again!"));
+            } else {
+                getLogger().info("Server " + subdomain + " is up, go join that " + event.getPlayer().getName());
+                event.getPlayer().connect(info);
+            }
         }
     }
 

@@ -59,7 +59,7 @@ public class ServerInfoPacket extends Packet {
             this.maxRam = ((long) properties.get("maxRam"));
 
             String[] tempTPS = ((String) properties.get("tps")).split(";");
-            tps = new double[2];
+            tps = new double[3];
             tps[0] = Double.parseDouble(tempTPS[0]);
             tps[1] = Double.parseDouble(tempTPS[1]);
             tps[2] = Double.parseDouble(tempTPS[2]);

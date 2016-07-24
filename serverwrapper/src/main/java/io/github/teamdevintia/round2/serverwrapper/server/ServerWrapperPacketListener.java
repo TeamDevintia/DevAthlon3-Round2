@@ -36,7 +36,8 @@ public class ServerWrapperPacketListener implements PipelineEventListener {
             StartServerPacket packet = (StartServerPacket) event.getReceivedPacket();
             Server server = ServerWrapper.getInstance().getServer(packet.getName());
             if (server == null) {
-                log.warning("Requested to start server" + packet.getName() + " which doesn't exist!");
+                log.warning("Requested to start server " + packet.getName() + " which doesn't exist, creating new one");
+                API.startServer(packet.getName(), ServerMod.SPIGOT, ServerVersion.v1_10_R1);
                 return;
             }
             try {
