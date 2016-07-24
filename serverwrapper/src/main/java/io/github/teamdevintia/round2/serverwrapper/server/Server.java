@@ -55,6 +55,8 @@ public class Server {
         options.add(ServerWrapper.getInstance().getJarManager().getFile(jar).getAbsolutePath());
         options.add("--port");
         options.add(serverPort + "");
+        options.add("-o");
+        options.add("false");
 
         // create folder
         if (!serverFolder.exists()) {
