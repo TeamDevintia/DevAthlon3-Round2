@@ -19,6 +19,9 @@ public class ServerInfoPacket extends Packet {
     private long maxRam;
     private double[] tps;
 
+    public ServerInfoPacket() {
+    }
+
     @Override
     public void write(ByteBuf byteBuf) {
 
