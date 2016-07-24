@@ -20,14 +20,15 @@ import java.util.logging.Level;
  * @author MiniDigger
  */
 @Log
-public class CommandLineCommandHandler {
+public class CommandLineCommandHandler extends Thread {
 
     private Map<String, Command> commands = new HashMap<>();
     private List<String> attachedServers = new ArrayList<>();
 
     public CommandLineCommandHandler() {
         addCommands();
-        run();
+        setName("CommandHandler");
+        start();
     }
 
     /**

@@ -61,7 +61,6 @@ public class Server {
 
         // copy over plugin
         File plugins = new File(serverFolder, "plugins");
-        System.out.println(plugins.getAbsolutePath());
         if (!plugins.exists()) {
             plugins.mkdirs();
         }

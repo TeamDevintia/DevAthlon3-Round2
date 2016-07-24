@@ -109,6 +109,7 @@ public class ServerThread extends Thread {
                             out.println(prefix + " " + line);
                         }
                     } else {
+                        System.out.println("null");
                         out.println(prefix + " " + line);
                     }
                 }

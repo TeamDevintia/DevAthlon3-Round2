@@ -30,6 +30,9 @@ public class ServerWrapper {
     private File root;
 
     public ServerWrapper() {
+        if (INSTANCE != null) {
+            throw new IllegalStateException("ServerWrapper is a singleton!");
+        }
         INSTANCE = this;
     }
 
@@ -145,6 +148,10 @@ public class ServerWrapper {
      * @param commandHandler the commandline handler this wrapper should use
      */
     public void setCommandHandler(CommandLineCommandHandler commandHandler) {
+        System.out.println("set command handler");
+        System.out.println("set command handler");
+        System.out.println("set command handler");
+        System.out.println("set command handler");
         this.commandHandler = commandHandler;
     }
 }

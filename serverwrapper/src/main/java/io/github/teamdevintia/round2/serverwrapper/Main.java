@@ -27,6 +27,7 @@ public class Main {
      * @param args the args. see documentation for more infos on supported parameters
      */
     public static void main(String[] args) {
+        // setup logger
         Logger rootlog = Logger.getLogger("");
         for (Handler h : rootlog.getHandlers()) {
             h.setFormatter(new LogFormatter());
@@ -49,13 +50,14 @@ public class Main {
         log.info("Starting wrapper...");
 
         ServerWrapper wrapper = new ServerWrapper();
+        if (interactive) {
+            wrapper.setCommandHandler(new CommandLineCommandHandler());
+        }
         wrapper.init(root);
 
         log.info("Wrapper started!");
 
-        if (interactive) {
-            wrapper.setCommandHandler(new CommandLineCommandHandler());
-        } else {
+        if (!interactive) {
             // keep alive
             while (running) {
 
