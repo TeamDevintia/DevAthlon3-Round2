@@ -10,6 +10,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * @author Shad0wCore
@@ -57,6 +59,7 @@ public class ServerInfoPacket extends Packet {
             this.maxRam = ((long) properties.get("maxRam"));
 
             String[] tempTPS = ((String) properties.get("tps")).split(";");
+            tps = new double[2];
             tps[0] = Double.parseDouble(tempTPS[0]);
             tps[1] = Double.parseDouble(tempTPS[1]);
             tps[2] = Double.parseDouble(tempTPS[2]);
