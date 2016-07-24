@@ -39,12 +39,14 @@ public class Main {
         //new startup options
         OptionSpec<String> rootFolderFlag = parser.accepts("root").withRequiredArg().defaultsTo(new File(".").getAbsolutePath());
         OptionSpec<Void> interactiveFlag = parser.accepts("interactive");
+        OptionSpec<Void> debugFlag = parser.accepts("debug");
 
         // parse it
         OptionSet options = parser.parse(args);
 
         File root = new File(options.valueOf(rootFolderFlag));
         boolean interactive = options.has(interactiveFlag);
+        LogFormatter.debug = options.has(debugFlag);
 
         log.info("Options parsed!");
         log.info("Starting wrapper...");

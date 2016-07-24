@@ -14,6 +14,8 @@ import java.util.logging.LogRecord;
  */
 public class LogFormatter extends Formatter {
 
+    public static boolean debug = false;
+
     private Date dat = new Date();
     private final static String format = "{0,date} {0,time}";
     private MessageFormat formatter;
@@ -41,18 +43,21 @@ public class LogFormatter extends Formatter {
         sb.append(text);
         sb.append(" ");
 
-        // Class name
-        if (record.getSourceClassName() != null) {
-            sb.append(record.getSourceClassName());
-        } else {
-            sb.append(record.getLoggerName());
+        if (debug) {
+            // Class name
+            if (record.getSourceClassName() != null) {
+                sb.append(record.getSourceClassName());
+            } else {
+                sb.append(record.getLoggerName());
+            }
+
+            // Method name
+            if (record.getSourceMethodName() != null) {
+                sb.append(" ");
+                sb.append(record.getSourceMethodName());
+            }
         }
 
-        // Method name
-        if (record.getSourceMethodName() != null) {
-            sb.append(" ");
-            sb.append(record.getSourceMethodName());
-        }
         sb.append(" - "); // lineSeparator
 
         String message = formatMessage(record);
