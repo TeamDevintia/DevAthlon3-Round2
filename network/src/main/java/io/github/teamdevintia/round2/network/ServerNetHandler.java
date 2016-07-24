@@ -36,4 +36,11 @@ public abstract class ServerNetHandler {
         return streamHandler;
     }
 
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public List<StreamHandler> getStreamHandlers() {
+        return streamHandlers;
+    }
 }
