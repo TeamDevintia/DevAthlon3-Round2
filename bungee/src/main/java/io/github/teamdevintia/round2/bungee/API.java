@@ -34,16 +34,16 @@ public class API {
         }
         ServerInfo serverInfo = ProxyServer.getInstance().constructServerInfo(name, new InetSocketAddress(host, port), "", false);
         ProxyServer.getInstance().getServers().put(name, serverInfo);
-        try {
-            Configuration bungeeConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File("config.yml"));
-            bungeeConfig.set("servers." + name + ".address", host + ":" + port);
-            bungeeConfig.set("servers." + name + ".restricted", false);
-            bungeeConfig.set("servers." + name + ".motd", "");
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(bungeeConfig, new File("config.yml"));
-        } catch (Exception e) {
-            ProxyServer.getInstance().getLogger().log(Level.SEVERE, "Could not add server to config", e);
-            return false;
-        }
+//        try {
+//            Configuration bungeeConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File("config.yml"));
+//            bungeeConfig.set("servers." + name + ".address", host + ":" + port);
+//            bungeeConfig.set("servers." + name + ".restricted", false);
+//            bungeeConfig.set("servers." + name + ".motd", "");
+//            ConfigurationProvider.getProvider(YamlConfiguration.class).save(bungeeConfig, new File("config.yml"));
+//        } catch (Exception e) {
+//            ProxyServer.getInstance().getLogger().log(Level.SEVERE, "Could not add server to config", e);
+//            return false;
+//        }
         return true;
     }
 
@@ -61,14 +61,14 @@ public class API {
             player.disconnect(new ComponentBuilder("Server was stopped, please rejoin.").color(ChatColor.GRAY).create());
         }
         ProxyServer.getInstance().getServers().remove(name);
-        try {
-            Configuration bungeeConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File("config.yml"));
-            bungeeConfig.set("servers." + name, null);
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(bungeeConfig, new File("config.yml"));
-        } catch (Exception e) {
-            ProxyServer.getInstance().getLogger().log(Level.SEVERE, "Could not remove server from config", e);
-            return false;
-        }
+//        try {
+//            Configuration bungeeConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File("config.yml"));
+//            bungeeConfig.set("servers." + name, null);
+//            ConfigurationProvider.getProvider(YamlConfiguration.class).save(bungeeConfig, new File("config.yml"));
+//        } catch (Exception e) {
+//            ProxyServer.getInstance().getLogger().log(Level.SEVERE, "Could not remove server from config", e);
+//            return false;
+//        }
         return true;
     }
 }
