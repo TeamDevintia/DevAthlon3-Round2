@@ -24,3 +24,9 @@ mvn clean install
 ```
 
 Or just get it from my ci http://bender.minidigger.me:9090/job/DevAthlon3-Round2
+
+## Using
+
+Get this zip (http://bender.minidigger.me/serverwrappertest.zip) as a quickstart.
+
+``java -jar serverwrapper-1.0-SNAPSHOT-jar-with-dependencies.jar -interactive -autoattach``
