@@ -7,6 +7,10 @@ public enum  EnumPacketDirection {
 
     WRAPPER,
     PROXY,
-    CLIENT
+    CLIENT;
 
+
+    public static EnumPacketDirection[] directions(EnumPacketDirection... enumPacketDirections) {
+        return enumPacketDirections;
+    }
 }
