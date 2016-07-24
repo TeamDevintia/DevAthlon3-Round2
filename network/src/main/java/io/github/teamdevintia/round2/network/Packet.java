@@ -11,8 +11,6 @@ public abstract class Packet<T> {
 
     public abstract void read(ByteBuf byteBuf);
 
-    public abstract EnumPacketDirection getEnumPacketDirection();
-
 }
 
 

@@ -20,8 +20,4 @@ public class CreateServerPacket extends Packet {
 
     }
 
-    @Override
-    public EnumPacketDirection getEnumPacketDirection() {
-        return null;
-    }
 }

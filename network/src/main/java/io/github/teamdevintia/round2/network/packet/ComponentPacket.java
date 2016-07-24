@@ -41,11 +41,6 @@ public class ComponentPacket extends Packet {
         this.enumPacketDirection = EnumPacketDirection.valueOf(new String(messageBytes, Charset.forName("UTF-8")));
     }
 
-    @Override
-    public EnumPacketDirection getEnumPacketDirection() {
-        return this.enumPacketDirection;
-    }
-
     public String getMessage() {
         return this.message;
     }

@@ -19,8 +19,4 @@ public class StopServerPacket extends Packet {
 
     }
 
-    @Override
-    public EnumPacketDirection getEnumPacketDirection() {
-        return null;
-    }
 }

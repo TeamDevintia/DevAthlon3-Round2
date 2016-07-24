@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class StreamHandler extends ChannelDuplexHandler {
 
     private Channel channel;
-    private BlockingQueue<Packet> sendBeforeConnected = new LinkedBlockingDeque<>();
+    private BlockingQueue<Packet> unhandledPackets = new LinkedBlockingDeque<>();
     private EventBus eventBus;
 
     public StreamHandler(EventBus eventBus) {
@@ -27,7 +27,7 @@ public class StreamHandler extends ChannelDuplexHandler {
 
     public void handlePacket(Packet packet) {
         if (this.channel == null) {
-            this.sendBeforeConnected.add(packet);
+            this.unhandledPackets.add(packet);
             return;
         }
 
@@ -37,7 +37,7 @@ public class StreamHandler extends ChannelDuplexHandler {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         this.channel = ctx.channel();
-        this.sendBeforeConnected.forEach(packet -> channel.writeAndFlush(packet));
+        this.unhandledPackets.forEach(packet -> channel.writeAndFlush(packet));
     }
 
     @Override
@@ -58,4 +58,11 @@ public class StreamHandler extends ChannelDuplexHandler {
         super.write(ctx, packet, promise);
     }
 
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
 }

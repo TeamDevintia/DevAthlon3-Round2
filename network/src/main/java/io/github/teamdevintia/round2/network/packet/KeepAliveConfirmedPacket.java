@@ -19,8 +19,4 @@ public class KeepAliveConfirmedPacket extends Packet {
 
     }
 
-    @Override
-    public EnumPacketDirection getEnumPacketDirection() {
-        return null;
-    }
 }

@@ -18,9 +18,4 @@ public class StoppedServerPacket extends Packet {
     public void read(ByteBuf byteBuf) {
 
     }
-
-    @Override
-    public EnumPacketDirection getEnumPacketDirection() {
-        return null;
-    }
 }
