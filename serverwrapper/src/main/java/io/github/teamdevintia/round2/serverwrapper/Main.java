@@ -40,12 +40,14 @@ public class Main {
         OptionSpec<String> rootFolderFlag = parser.accepts("root").withRequiredArg().defaultsTo(new File(".").getAbsolutePath());
         OptionSpec<Void> interactiveFlag = parser.accepts("interactive");
         OptionSpec<Void> debugFlag = parser.accepts("debug");
+        OptionSpec<Void> autoAttachFlag = parser.accepts("autoattach");
 
         // parse it
         OptionSet options = parser.parse(args);
 
         File root = new File(options.valueOf(rootFolderFlag));
         boolean interactive = options.has(interactiveFlag);
+        boolean autoAttach = options.has(autoAttachFlag);
         LogFormatter.debug = options.has(debugFlag);
 
         log.info("Options parsed!");
@@ -55,7 +57,7 @@ public class Main {
         if (interactive) {
             wrapper.setCommandHandler(new CommandLineCommandHandler());
         }
-        wrapper.init(root);
+        wrapper.init(root, autoAttach);
 
         log.info("Wrapper started!");
 

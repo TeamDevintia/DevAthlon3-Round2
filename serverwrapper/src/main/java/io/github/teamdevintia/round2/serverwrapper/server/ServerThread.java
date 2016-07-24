@@ -104,6 +104,9 @@ public class ServerThread extends Thread {
             try {
                 String line;
                 while ((line = br.readLine()) != null) {
+                    // don't spam the ocnsole with useless stuff
+                    if (line.equals("") || line.equals(">")) continue;
+
                     if (ServerWrapper.getInstance().getCommandHandler() != null) {
                         if (ServerWrapper.getInstance().getCommandHandler().isAttached(prefix)) {
                             out.println(prefix + " " + line);

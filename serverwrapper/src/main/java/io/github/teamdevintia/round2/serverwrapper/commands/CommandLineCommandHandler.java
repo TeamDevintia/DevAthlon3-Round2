@@ -220,4 +220,13 @@ public class CommandLineCommandHandler extends Thread {
     public boolean isAttached(String prefix) {
         return attachedServers.contains(prefix);
     }
+
+    /**
+     * Attaches to a session
+     *
+     * @param name the session to attach to
+     */
+    public void attach(String name) {
+        attachedServers.add(name);
+    }
 }
