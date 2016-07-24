@@ -20,7 +20,6 @@ public class Test1 {
         wrapperServerNetHandler.establishServerConnection("127.0.0.1", 8000, new Callback<StreamHandler>() {
             @Override
             public void trigger(StreamHandler streamHandler) {
-                System.out.println("test");
             }
         });
 

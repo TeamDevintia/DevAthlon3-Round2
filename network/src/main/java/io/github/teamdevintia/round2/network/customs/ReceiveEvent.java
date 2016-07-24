@@ -11,10 +11,8 @@ public class ReceiveEvent implements PipelineEventListener {
 
     @PipelineEvent
     public void onReceive(PacketReceiveEvent event) {
-
         System.out.println(event.getEnumPacketDirection());
         System.out.println(event.getReceivedPacket());
-
     }
 
 }
