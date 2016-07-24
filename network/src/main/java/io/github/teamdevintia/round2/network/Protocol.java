@@ -7,7 +7,6 @@ import io.github.teamdevintia.round2.network.packet.*;
  */
 public enum Protocol {
 
-    COMPONENT_PACK(1111111, ComponentPacket.class),
 
     CREATE_SERVER_PACKET(1, CreateServerPacket.class),
     CREATED_SERVER_PACKET(11, CreatedServerPacket.class),
@@ -21,13 +20,8 @@ public enum Protocol {
     STOP_SERVER_PACKET(4, StopServerPacket.class),
     STOPPED_SERVER_PACKET(44, StoppedServerPacket.class),
 
-    KEEP_ALIVE_PACKET(5, KeepAlivePacket.class),
-    KEEP_ALIVE_CONFIRMED_PACKET(55, KeepAliveConfirmedPacket.class),
-
-    SERVER_INFO_PACKET(6, ServerInfoPacket.class),
-
-    CONSOLE_COMMAND_PACKET(7, ConsoleCommandPacket.class);
-
+    SERVER_INFO_PACKET(5, ServerInfoPacket.class),
+    CONSOLE_COMMAND_PACKET(55, ConsoleCommandPacket.class);
 
     private int packetID;
     private Class<? extends Packet> packetClass;
