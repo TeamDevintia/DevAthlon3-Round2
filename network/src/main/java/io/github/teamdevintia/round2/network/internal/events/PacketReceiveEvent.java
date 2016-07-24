@@ -14,7 +14,8 @@ public class PacketReceiveEvent extends Event {
 
     public PacketReceiveEvent(Packet receivedPacket) {
         this.receivedPacket = receivedPacket;
-        this.enumPacketDirection = this.receivedPacket.getEnumPacketDirection();
+        //TODO do we need this?
+       // this.enumPacketDirection = this.receivedPacket.getEnumPacketDirection();
     }
 
     public EnumPacketDirection getEnumPacketDirection() {
