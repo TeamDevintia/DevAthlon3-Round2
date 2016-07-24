@@ -19,7 +19,7 @@ import static java.nio.file.FileVisitResult.TERMINATE;
 public class FileUtil {
 
     public static final File BUNGEE = new File(ServerWrapper.getInstance().getJarManager().getRepo(), "bungee.jar");
-    public static final File BUKKIT = new File(ServerWrapper.getInstance().getJarManager().getRepo(), "bungee.jar");
+    public static final File BUKKIT = new File(ServerWrapper.getInstance().getJarManager().getRepo(), "bukkit.jar");
 
     /**
      * Copies a file to a dir
