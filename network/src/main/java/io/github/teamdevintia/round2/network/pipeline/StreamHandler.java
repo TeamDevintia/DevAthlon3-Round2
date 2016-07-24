@@ -43,6 +43,7 @@ public class StreamHandler extends ChannelDuplexHandler {
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
         if (packet instanceof Packet) {
+            System.out.println(packet);
             PacketReceiveEvent packetReceiveEvent = new PacketReceiveEvent((Packet) packet);
             this.eventBus.callEvent(packetReceiveEvent);
         }
@@ -54,6 +55,8 @@ public class StreamHandler extends ChannelDuplexHandler {
             PacketSendEvent packetSendEvent = new PacketSendEvent((Packet) packet);
             this.eventBus.callEvent(packetSendEvent);
         }
+
+        super.write(ctx, packet, promise);
     }
 
 }

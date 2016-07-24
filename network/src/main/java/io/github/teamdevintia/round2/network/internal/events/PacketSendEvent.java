@@ -1,13 +1,13 @@
 package io.github.teamdevintia.round2.network.internal.events;
 
-import io.github.teamdevintia.round2.network.internal.CancelableEvent;
+import io.github.teamdevintia.round2.network.internal.Event;
 import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.packet.Packet;
 
 /**
  * @author Shad0wCore
  */
-public class PacketSendEvent extends CancelableEvent {
+public class PacketSendEvent extends Event {
 
     private Packet sentPacket;
     private EnumPacketDirection enumPacketDirection;
