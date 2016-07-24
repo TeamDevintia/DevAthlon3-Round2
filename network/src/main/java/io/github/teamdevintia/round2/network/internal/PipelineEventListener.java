@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.network.internal.event;
+package io.github.teamdevintia.round2.network.internal;
 
 /**
  * @author Shad0wCore
