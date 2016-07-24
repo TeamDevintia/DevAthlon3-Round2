@@ -105,6 +105,18 @@ public class CommandLineCommandHandler {
             }
         });
 
+        commands.put("deleteserver", args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <name>");
+                return;
+            }
+
+            API.stopServer(args[1]);
+            API.deleteServer(args[1]);
+
+            log.info("Server deleted");
+        });
+
         commands.put("startdevserver", (args -> {
             Server server = new ServerBuilder("DevServer").port(3333).javaOps(new ServerJavaOps(1024, false)).mod(ServerMod.SPIGOT).version(ServerVersion.v1_10_R1).build();
             try {
