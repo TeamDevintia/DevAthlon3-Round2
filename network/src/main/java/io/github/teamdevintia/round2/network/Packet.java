@@ -1,4 +1,4 @@
-package io.github.teamdevintia.round2.network.packet;
+package io.github.teamdevintia.round2.network;
 
 import io.netty.buffer.ByteBuf;
 

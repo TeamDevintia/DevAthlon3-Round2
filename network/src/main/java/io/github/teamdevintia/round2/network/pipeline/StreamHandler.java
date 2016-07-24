@@ -3,7 +3,7 @@ package io.github.teamdevintia.round2.network.pipeline;
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.events.PacketReceiveEvent;
 import io.github.teamdevintia.round2.network.internal.events.PacketSendEvent;
-import io.github.teamdevintia.round2.network.packet.Packet;
+import io.github.teamdevintia.round2.network.Packet;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

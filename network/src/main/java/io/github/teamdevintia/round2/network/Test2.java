@@ -1,7 +1,6 @@
 package io.github.teamdevintia.round2.network;
 
 import io.github.teamdevintia.round2.network.internal.EventBus;
-import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.pipeline.StreamHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;

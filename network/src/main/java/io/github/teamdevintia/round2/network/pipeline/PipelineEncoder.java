@@ -2,7 +2,7 @@ package io.github.teamdevintia.round2.network.pipeline;
 
 import io.github.teamdevintia.round2.network.Protocol;
 import io.github.teamdevintia.round2.network.internal.EventBus;
-import io.github.teamdevintia.round2.network.packet.Packet;
+import io.github.teamdevintia.round2.network.Packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
