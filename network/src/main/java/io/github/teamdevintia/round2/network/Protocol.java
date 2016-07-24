@@ -24,7 +24,9 @@ public enum Protocol {
     KEEP_ALIVE_PACKET(5, KeepAlivePacket.class),
     KEEP_ALIVE_CONFIRMED_PACKET(55, KeepAliveConfirmedPacket.class),
 
-    SERVER_INFO_PACKET(6, ServerInfoPacket.class);
+    SERVER_INFO_PACKET(6, ServerInfoPacket.class),
+
+    CONSOLE_COMMAND_PACKET(7, ConsoleCommandPacket.class);
 
 
     private int packetID;
