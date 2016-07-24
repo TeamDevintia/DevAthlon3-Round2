@@ -23,7 +23,6 @@ public class PipelineEncoder extends MessageToByteEncoder<Packet> {
 
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Packet packet, ByteBuf byteBuf) throws Exception {
-
         int packetID = Protocol.getIDFromPacket(packet.getClass());
 
         if (packetID < 1) {
