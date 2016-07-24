@@ -14,7 +14,7 @@ import java.util.logging.Level;
 @Log
 public class API {
 
-    private int nextPort = 40000;
+    private static int nextPort = 40000;
 
     /**
      * Starts a the server with that name, version and mod. Creates a new server if necessary
@@ -24,7 +24,7 @@ public class API {
      * @param version the version that that server should be running
      * @return the port used, -1 if something went wrong
      */
-    public int startServer(String name, ServerMod mod, ServerVersion version) {
+    public static int startServer(String name, ServerMod mod, ServerVersion version) {
         // attempt to restart if params match
         Server server = ServerWrapper.getInstance().getServer(name);
         if (server != null) {
@@ -52,7 +52,7 @@ public class API {
             nextPort++;
         }
 
-        server = new ServerBuilder(name).mod(mod).version(version).port(nextPort).build();
+        server = new ServerBuilder(name).mod(mod).version(version).port(nextPort).javaOps(new ServerJavaOps(1024, true)).build();
         ServerWrapper.getInstance().addServer(server);
         try {
             server.start();
@@ -68,7 +68,7 @@ public class API {
      *
      * @param name the name of the server to stop
      */
-    public void stopServer(String name) {
+    public static void stopServer(String name) {
         Server server = ServerWrapper.getInstance().getServer(name);
         if (server == null) {
             return;
@@ -84,7 +84,7 @@ public class API {
      *
      * @param port the port of the server to stop
      */
-    public void stopServer(int port) {
+    public static void stopServer(int port) {
         Server server = ServerWrapper.getInstance().getServer(port);
         if (server == null) {
             return;
@@ -100,7 +100,7 @@ public class API {
      *
      * @param name the name of the server to be deleted
      */
-    public void deleteServer(String name) {
+    public static void deleteServer(String name) {
         Server server = ServerWrapper.getInstance().getServer(name);
         if (server == null) {
             return;
@@ -116,7 +116,7 @@ public class API {
      *
      * @param port the port of the server to be deleted
      */
-    public void deleteServer(int port) {
+    public static void deleteServer(int port) {
         Server server = ServerWrapper.getInstance().getServer(port);
         if (server == null) {
             return;

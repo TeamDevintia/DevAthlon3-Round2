@@ -31,7 +31,6 @@ public class CommandLineCommandHandler {
      * Creates the commands
      */
     private void addCommands() {
-        //TODO add more usefull commands
         commands.put("stop", (args) -> {
             log.info("stopping servers");
             ServerWrapper.getInstance().stopServers();
@@ -40,6 +39,70 @@ public class CommandLineCommandHandler {
             } catch (InterruptedException ignored) {
             }
             System.exit(0);
+        });
+
+        commands.put("stopserver", (args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <port/name>");
+                return;
+            }
+
+            // try to parse the port
+            Server server = getServerUsingPortOrName(args[1]);
+
+            if (server == null) {
+                log.warning("Unknown server " + args[1]);
+                return;
+            }
+
+            if (!server.isRunning()) {
+                log.warning("Server is not running");
+                return;
+            }
+
+            server.getThread().stopServer();
+            log.info("Server stopped");
+        }));
+
+        commands.put("startserver", args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <port/name>");
+                return;
+            }
+
+            // try to parse the port
+            Server server = getServerUsingPortOrName(args[1]);
+
+            if (server == null) {
+                log.warning("Unknown server " + args[1]);
+                return;
+            }
+
+            if (server.isRunning()) {
+                log.warning("Server is running!");
+                return;
+            }
+
+            try {
+                server.start();
+                log.info("Server started");
+            } catch (ServerJarNotFoundException | IOException e) {
+                log.log(Level.WARNING, "Error while starting the server", e);
+            }
+        });
+
+        commands.put("createserver", args -> {
+            if (args.length == 1) {
+                log.warning("Missing arg <name>");
+                return;
+            }
+            int p = API.startServer(args[1], ServerMod.SPIGOT, ServerVersion.v1_10_R1);
+
+            if (p == -1) {
+                log.info("Error while starting server");
+            } else {
+                log.info("Server started");
+            }
         });
 
         commands.put("startdevserver", (args -> {
@@ -51,12 +114,18 @@ public class CommandLineCommandHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }));
+        }
 
-        commands.put("mcsignondoor", args -> {
-            new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
-                    version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
-        });
+        ));
+
+        commands.put("mcsignondoor", args ->
+
+                {
+                    new PlaceHolderBuilder().port(40000).motd("Gone Fishin' Back in Five Minutes").numPlayer(0).maxPlayers(0).
+                            version("Offline").awayMessage("Gone Fishin' Back in Five Minutes").protocol(47).build();
+                }
+
+        );
     }
 
     /**
@@ -78,5 +147,24 @@ public class CommandLineCommandHandler {
         } catch (IOException ex) {
             log.log(Level.ALL, "Could not handle interactive mode", ex);
         }
+    }
+
+    /**
+     * Retrieves a server using the port or the name specified
+     *
+     * @param portOrName a int as a string for a port or just a name
+     * @return the server that matches the port or name, may be null
+     */
+    private Server getServerUsingPortOrName(String portOrName) {
+        Server server;
+        try {
+            int port = Integer.parseInt(portOrName);
+            server = ServerWrapper.getInstance().getServer(port);
+        } catch (NumberFormatException ex) {
+            // use the name then
+            server = ServerWrapper.getInstance().getServer(portOrName);
+        }
+
+        return server;
     }
 }
