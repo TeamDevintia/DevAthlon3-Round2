@@ -28,6 +28,7 @@ public class ServerWrapper {
     private PlaceHolderHandler placeHolderHandler;
     private CommandLineCommandHandler commandHandler;
     private File root;
+    private boolean autoAttach;
 
     public ServerWrapper() {
         if (INSTANCE != null) {
@@ -39,10 +40,12 @@ public class ServerWrapper {
     /**
      * initialises this wrapper
      *
-     * @param root the root folder of this wrapper. expects a repo subfolder. every server will be a subfolder too
+     * @param root       the root folder of this wrapper. expects a repo subfolder. every server will be a subfolder too (unless
+     * @param autoAttach if true,
      */
-    public void init(File root) {
+    public void init(File root, boolean autoAttach) {
         this.root = root;
+        this.autoAttach = autoAttach;
         servers = new ArrayList<>();
 
         // shutdown hook
@@ -51,6 +54,10 @@ public class ServerWrapper {
             public void run() {
                 stopServers();
                 placeHolderHandler.removeAll();
+                try {
+                    Thread.sleep(0b1111101000);
+                } catch (InterruptedException ignore) {
+                }
             }
         });
 

@@ -78,6 +78,13 @@ public class Server {
         ProcessBuilder pb = new ProcessBuilder(options);
         pb.directory(serverFolder);
 
+        // autoattach
+        if(ServerWrapper.getInstance().isAutoAttach()){
+            if(ServerWrapper.getInstance().getCommandHandler() != null){
+                ServerWrapper.getInstance().getCommandHandler().attach(name);
+            }
+        }
+
         // start
         running = true;
         thread = new ServerThread(this, pb, (server, statusCode) -> {
