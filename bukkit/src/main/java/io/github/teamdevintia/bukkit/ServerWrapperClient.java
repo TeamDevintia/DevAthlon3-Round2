@@ -1,10 +1,11 @@
 package io.github.teamdevintia.bukkit;
 
+import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;
-import io.github.teamdevintia.round2.network.packet.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.packet.ServerInfoPacket;
 import io.github.teamdevintia.round2.network.pipeline.MessageSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,18 +68,18 @@ public final class ServerWrapperClient extends JavaPlugin {
         }.runTaskTimer(this, 20, 20);
     }
 
+    /**
+     * Constructs a new server info packet and sends it
+     */
     private void sendInfoPacket() {
-        // serverName;
-        Bukkit.getServer().getMaxPlayers();
-        Bukkit.getOnlinePlayers().size();
-        Runtime.getRuntime().freeMemory();
-        Runtime.getRuntime().maxMemory();
-        getTps();
+        ServerInfoPacket packet = new ServerInfoPacket(serverName, Bukkit.getOnlinePlayers().size(), Bukkit.getServer().getMaxPlayers(),
+                Runtime.getRuntime().freeMemory(), Runtime.getRuntime().maxMemory(), getTps());
+        clientNetHandler.addToSendQueue(packet);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        clientNetHandler.getStreamHandler().getChannel().disconnect();
     }
 
     /**

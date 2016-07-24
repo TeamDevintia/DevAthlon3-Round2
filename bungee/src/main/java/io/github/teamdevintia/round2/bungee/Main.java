@@ -1,10 +1,11 @@
 package io.github.teamdevintia.round2.bungee;
 
+import io.github.teamdevintia.round2.network.EnumPacketDirection;
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ComponentPacket;
-import io.github.teamdevintia.round2.network.EnumPacketDirection;
+import io.github.teamdevintia.round2.network.packet.StartServerPacket;
 import io.github.teamdevintia.round2.network.pipeline.MessageSerializer;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -26,11 +27,15 @@ public class Main extends Plugin implements Listener {
     private static final String IP = "127.0.0.1";
     private static final int PORT = 8000;
 
+    private static Main instance;
+
     private EventBus eventBus;
     private ClientNetHandler clientNetHandler;
 
     @Override
     public void onEnable() {
+        instance = this;
+
         // init event bus
         eventBus = new EventBus();
         eventBus.registerEvent(new PacketEventHandler(new BungeePacketListener(), () -> getLogger().info("Event called"), "BungeeEventHandler"));
@@ -38,6 +43,7 @@ public class Main extends Plugin implements Listener {
         // init connection
         clientNetHandler = new ClientNetHandler(eventBus);
         clientNetHandler.establishConnection(IP, PORT, streamHandler -> {
+            //TODO remove this
             MessageSerializer messageSerializer = new MessageSerializer("information");
             messageSerializer.addProperty("numPlayers", 123).addProperty("maxPlayers", 234);
             messageSerializer.addProperty("currentRam", 1024).addProperty("maxRam", 3056);
@@ -51,8 +57,7 @@ public class Main extends Plugin implements Listener {
 
     @Override
     public void onDisable() {
-        //TODO shutdown connection
-        super.onDisable();
+        clientNetHandler.getStreamHandler().getChannel().disconnect();
     }
 
     @EventHandler
@@ -68,10 +73,18 @@ public class Main extends Plugin implements Listener {
             // TODO join to a new server
             System.out.println("we need to spin up a new server " + subdomain + ", you gotta wait");
             sendStartServerPacket(subdomain);
+
+            // wait till new server is started up
+
         }
     }
 
     private void sendStartServerPacket(String name) {
-//        clientNetHandler.getStreamHandler().handlePacket(packet);
+        StartServerPacket packet = new StartServerPacket(name);
+        clientNetHandler.addToSendQueue(packet);
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 }

@@ -1,5 +1,8 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.network.packet.DeletedServerPacket;
+import io.github.teamdevintia.round2.network.packet.StartedServerPacket;
+import io.github.teamdevintia.round2.network.packet.StoppedServerPacket;
 import io.github.teamdevintia.round2.serverwrapper.FileUtil;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import lombok.AllArgsConstructor;
@@ -79,17 +82,25 @@ public class Server {
         pb.directory(serverFolder);
 
         // autoattach
-        if(ServerWrapper.getInstance().isAutoAttach()){
-            if(ServerWrapper.getInstance().getCommandHandler() != null){
+        if (ServerWrapper.getInstance().isAutoAttach()) {
+            if (ServerWrapper.getInstance().getCommandHandler() != null) {
                 ServerWrapper.getInstance().getCommandHandler().attach(name);
             }
         }
+
+        // send packet
+        StartedServerPacket packet = new StartedServerPacket(name, serverMod.name(), serverVersion.name(), serverPort);
+        ServerWrapper.getInstance().sendPacket(packet);
 
         // start
         running = true;
         thread = new ServerThread(this, pb, (server, statusCode) -> {
             log.info("Server " + server.getName() + " existed with status code " + statusCode);
             running = false;
+
+            // send packet
+            StoppedServerPacket p = new StoppedServerPacket(name);
+            ServerWrapper.getInstance().sendPacket(p);
         });
     }
 
@@ -105,7 +116,15 @@ public class Server {
             }
         }
 
-        return FileUtil.deleteFileOrFolder(serverFolder.toPath());
+        ServerWrapper.getInstance().removeServer(this);
+
+        boolean b = FileUtil.deleteFileOrFolder(serverFolder.toPath());
+
+        // send packet
+        DeletedServerPacket packet = new DeletedServerPacket(name);
+        ServerWrapper.getInstance().sendPacket(packet);
+
+        return b;
     }
 
     /**

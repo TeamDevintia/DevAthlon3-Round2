@@ -6,13 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @author Shad0wCore
+ * @author MiniDigger
  */
 @Getter
 @AllArgsConstructor
-public class StopServerPacket extends Packet {
+public class ConsoleCommandPacket extends Packet {
 
-    private String name;
+    private String serverName;
+    private String command;
 
     @Override
     public void write(ByteBuf byteBuf) {

@@ -1,5 +1,6 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.network.packet.StoppedServerPacket;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -84,6 +85,10 @@ public class ServerThread extends Thread {
         } else {
             sendMessage("stop");
         }
+
+        // send packet
+        StoppedServerPacket packet = new StoppedServerPacket(server.getName());
+        ServerWrapper.getInstance().sendPacket(packet);
     }
 
     /**

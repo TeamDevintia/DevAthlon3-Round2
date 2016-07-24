@@ -1,8 +1,10 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.network.Packet;
 import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.WrapperServerNetHandler;
+import io.github.teamdevintia.round2.network.packet.CreatedServerPacket;
 import io.github.teamdevintia.round2.serverwrapper.commands.CommandLineCommandHandler;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
@@ -36,6 +38,10 @@ public class ServerWrapper {
     private CommandLineCommandHandler commandHandler;
     private File root;
     private boolean autoAttach;
+
+    // packet stuff
+    private WrapperServerNetHandler wrapperServerNetHandler;
+    private EventBus eventBus;
 
     public ServerWrapper() {
         if (INSTANCE != null) {
@@ -82,7 +88,7 @@ public class ServerWrapper {
         eventBus.registerEvent(new PacketEventHandler(new ServerWrapperPacketListener(), () -> log.info("Event called"), "ServerWrapperEventHandler"));
 
         // startup netty
-        WrapperServerNetHandler wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);
+        wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);
         wrapperServerNetHandler.establishServerConnection(IP, PORT, streamHandler -> log.info("Channel established"));
 
         // start bungee
@@ -143,11 +149,14 @@ public class ServerWrapper {
     }
 
     /**
-     * registers a new server
+     * registers a new server, sends the packet
      *
      * @param server the server to register
      */
     public void addServer(Server server) {
+        CreatedServerPacket packet = new CreatedServerPacket(server.getName(), server.getServerMod().name(), server.getServerVersion().name(), server.getServerPort());
+        sendPacket(packet);
+
         servers.add(server);
     }
 
@@ -171,5 +180,14 @@ public class ServerWrapper {
      */
     public void setCommandHandler(CommandLineCommandHandler commandHandler) {
         this.commandHandler = commandHandler;
+    }
+
+    /**
+     * Sends a packet
+     *
+     * @param packet the packet to be send
+     */
+    public void sendPacket(Packet packet) {
+        wrapperServerNetHandler.addToSendQueue(packet);
     }
 }
