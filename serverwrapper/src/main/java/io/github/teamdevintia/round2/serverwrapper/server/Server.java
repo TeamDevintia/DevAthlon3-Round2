@@ -41,22 +41,25 @@ public class Server {
 
         ServerJar jar = ServerWrapper.getInstance().getJarManager().getJar(serverMod, serverVersion);
 
+        // start options
         List<String> options = new ArrayList<>();
         options.add("java");
         options.addAll(serverJavaOps.getFlags());
         options.add("-Dcom.mojang.eula.agree=true"); // fuck you eula
-        options.add("-Djline.terminal=jline.UnsupportedTerminal");
-        options.add("-DserverName=" + name);
+        options.add("-Djline.terminal=jline.UnsupportedTerminal"); // remove warning on windows
+        options.add("-DserverName=" + name); // for use in the bukkit plugin
         options.add("-jar");
         options.add(ServerWrapper.getInstance().getJarManager().getFile(jar).getAbsolutePath());
         options.add("--port");
         options.add(serverPort + "");
 
+        // create folder
         if (!serverFolder.exists()) {
             log.info("Server folder " + serverFolder.getAbsolutePath() + " does not exist, creating...");
             serverFolder.mkdirs();
         }
 
+        // copy over plugin
         File plugins = new File(serverFolder, "plugins");
         System.out.println(plugins.getAbsolutePath());
         if (!plugins.exists()) {
@@ -69,9 +72,14 @@ public class Server {
             FileUtil.copyPlugin(FileUtil.BUKKIT, plugins);
         }
 
+        // copy over world and stuff (faster load time, persistent config)
+        FileUtil.copyDir(FileUtil.SERVER, serverFolder);
+
+        // set root dir
         ProcessBuilder pb = new ProcessBuilder(options);
         pb.directory(serverFolder);
 
+        // start
         running = true;
         thread = new ServerThread(this, pb, (server, statusCode) -> {
             log.info("Server " + server.getName() + " existed with status code " + statusCode);
