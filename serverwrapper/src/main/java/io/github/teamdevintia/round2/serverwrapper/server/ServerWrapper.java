@@ -78,6 +78,45 @@ public class ServerWrapper {
     }
 
     /**
+     * Gets a server by its name
+     *
+     * @param name the name of the server
+     * @return the server with that name, null if not found
+     */
+    public Server getServer(String name) {
+        for (Server server : servers) {
+            if (server.getName().equals(name)) {
+                return server;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a server by its port
+     *
+     * @param port the port of the server
+     * @return the server with that port, null if not found
+     */
+    public Server getServer(int port) {
+        for (Server server : servers) {
+            if (server.getServerPort() == port) {
+                return server;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Removes a server from the list
+     *
+     * @param server the server to be removed
+     */
+    public void removeServer(Server server) {
+        servers.remove(server);
+    }
+
+    /**
      * registers a new server
      *
      * @param server the server to register
@@ -92,4 +131,6 @@ public class ServerWrapper {
     public static ServerWrapper getInstance() {
         return INSTANCE;
     }
+
+
 }
