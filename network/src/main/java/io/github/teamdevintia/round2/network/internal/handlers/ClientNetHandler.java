@@ -14,10 +14,12 @@ import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import lombok.Getter;
 
 /**
  * @author Shad0wCore
  */
+@Getter
 public class ClientNetHandler extends NetHandler {
 
     private StreamHandler streamHandler;

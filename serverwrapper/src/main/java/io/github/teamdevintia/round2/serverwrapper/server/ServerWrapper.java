@@ -1,5 +1,8 @@
 package io.github.teamdevintia.round2.serverwrapper.server;
 
+import io.github.teamdevintia.round2.network.internal.EventBus;
+import io.github.teamdevintia.round2.network.internal.EventHandler;
+import io.github.teamdevintia.round2.network.internal.handlers.WrapperServerNetHandler;
 import io.github.teamdevintia.round2.serverwrapper.commands.CommandLineCommandHandler;
 import io.github.teamdevintia.round2.serverwrapper.exceptions.ServerJarNotFoundException;
 import io.github.teamdevintia.round2.serverwrapper.placeholder.PlaceHolderHandler;
@@ -20,6 +23,9 @@ import java.util.logging.Level;
 @Log
 @Getter
 public class ServerWrapper {
+
+    private static final String IP = "127.0.0.1";
+    private static final int PORT = 8000;
 
     private static ServerWrapper INSTANCE;
     private Server bungee;
@@ -69,6 +75,14 @@ public class ServerWrapper {
 
         // init placeholders
         placeHolderHandler = new PlaceHolderHandler();
+
+        // setup packet event bus
+        EventBus eventBus = new EventBus();
+        eventBus.registerEvent(new EventHandler(new ServerWrapperPacketListener(), () -> log.info("Event called"), "ServerWrapperEventHandler"));
+
+        // startup netty
+        WrapperServerNetHandler wrapperServerNetHandler = new WrapperServerNetHandler(eventBus);
+        wrapperServerNetHandler.establishServerConnection(IP, PORT, streamHandler -> log.info("Channel established"));
 
         // start bungee
         try {
