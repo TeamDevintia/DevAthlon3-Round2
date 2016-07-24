@@ -5,6 +5,9 @@ import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ServerInfoPacket;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,7 +21,7 @@ import java.util.regex.Pattern;
  *
  * @author MiniDigger
  */
-public final class ServerWrapperClient extends JavaPlugin {
+public final class ServerWrapperClient extends JavaPlugin implements Listener {
 
     // TODO load these from somewhere
     private static final String IP = "127.0.0.1";
@@ -42,6 +45,8 @@ public final class ServerWrapperClient extends JavaPlugin {
 
         serverName = System.getProperty("serverName");
 
+        getServer().getPluginManager().registerEvents(this, this);
+
         // init event bus
         eventBus = new EventBus();
         eventBus.registerEvent(new PacketEventHandler(new BukkitPacketListener(), () -> getLogger().info("Event called"), "BungeeEventHandler"));
@@ -57,6 +62,11 @@ public final class ServerWrapperClient extends JavaPlugin {
                 sendInfoPacket();
             }
         }.runTaskTimer(this, 20, 20);
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        e.getPlayer().sendMessage("Willkommen auf Server " + serverName);
     }
 
     /**
