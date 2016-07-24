@@ -3,4 +3,3 @@ version: ${project.version}
 main: io.github.teamdevintia.bukkit.ServerWrapperClient
 authors: [TeamDevintia]
 commands:
-    mytps:
