@@ -4,6 +4,7 @@ import io.github.teamdevintia.round2.network.internal.EventBus;
 import io.github.teamdevintia.round2.network.internal.PacketEventHandler;
 import io.github.teamdevintia.round2.network.internal.handlers.ClientNetHandler;
 import io.github.teamdevintia.round2.network.packet.ServerInfoPacket;
+import io.github.teamdevintia.round2.network.packet.DeleteServerPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -67,6 +68,15 @@ public final class ServerWrapperClient extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         e.getPlayer().sendMessage("Willkommen auf Server " + serverName);
+    }
+    
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        if(Bukkit.getOnlinePlayers().size() == 0){
+            // last player
+            DeleteServerPacket packet = new DeleteServerPacket(serverName);
+            clientNetHandler.addToSendQueue(packet);
+        }
     }
 
     /**
