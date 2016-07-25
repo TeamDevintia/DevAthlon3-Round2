@@ -1,30 +1,36 @@
 package io.github.teamdevintia.round2.client;
 
+import io.github.teamdevintia.round2.client.gui.Bounding;
+import io.github.teamdevintia.round2.client.gui.CentralGuiUnit;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Created by Martin on 24.07.2016.
- */
-public class Main extends Application {
+public class Main extends Application implements Kernel {
 
-    private static Main instance;
+    private static Stage primaryStage;
+    private static Bounding primaryBounding = new Bounding(750, 250, 1000, 500);
 
-    public void start(Stage primaryStage) throws Exception {
-        instance = this;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+    public void start(Stage rootStage) throws Exception {
+        primaryStage = rootStage;
 
-        primaryStage.setTitle("Test");
-        primaryStage.setScene(new Scene(root, 700, 600));
-        primaryStage.show();
+        CentralGuiUnit centralGuiUnit = new CentralGuiUnit();
+        centralGuiUnit.initialize(this);
+
+        rootStage.setTitle("Dynamic Server Interface");
+        rootStage.show();
 
     }
 
-    public static Main getInstance() {
-        return instance;
+    public Bounding getBounding() {
+        return primaryBounding;
     }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
 }

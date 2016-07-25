@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="statusPane" layoutY="496.0" prefHeight="45.0" prefWidth="911.0" style="-fx-background-color: #16a085;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="50.0" layoutY="12.0" text="No further informations" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <HBox alignment="CENTER" layoutY="45.0" prefHeight="93.0" prefWidth="911.0" spacing="50.0" style="-fx-background-color: #1abc9c;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Group>
+               <children>
+                  <Label fx:id="serverName" text="SERVER NAME" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="serverVersion" prefHeight="92.0" prefWidth="136.0" text="SERVER Version" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Group>
+            <Group />
+            <Group>
+               <children>
+                  <Label text="PLAYERS" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currentPlayers" prefHeight="92.0" prefWidth="136.0" text="0 / 20" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Label text="MEMORY USAGE" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="memoryUsage" prefHeight="92.0" prefWidth="136.0" text="512M / 1024MB" textFill="WHITE">
+                     <font>
+                        <Font name="Couture-Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Group>
+         </children>
+         <padding>
+            <Insets bottom="-15.0" top="15.0" />
+         </padding>
+      </HBox>
+      <AnchorPane layoutY="-1.0" prefHeight="45.0" prefWidth="911.0" style="-fx-background-color: #101010;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="50.0" layoutY="12.0" prefHeight="45.0" prefWidth="911.0" text="Dynamic Server Interface" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
