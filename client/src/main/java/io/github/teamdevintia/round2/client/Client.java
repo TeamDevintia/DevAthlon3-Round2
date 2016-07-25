@@ -32,7 +32,7 @@ public class Client extends Application{
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(BungeeCordBridge.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
