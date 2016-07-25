@@ -1,0 +1,55 @@
+/*
+*
+* MaterialCSS by batthomas
+*
+*/
+
+@import url("https://fonts.google.com/specimen/Roboto");
+
+.btn {
+    -fx-text-fill: white;
+    -fx-background-color: #FAFAFA;
+    -fx-alignment: CENTER;
+    -fx-font-family: "Roboto";
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.30), 6.0, 0.3, 0, 1);
+}
+
+.btn-teal{ 
+    -fx-background-color: #009688;  
+}
+
+.btn-teal:hover{
+    -fx-background-color: #4DB6AC;
+}
+.btn-teal:pressed{
+    -fx-background-color: #80CBC4;
+}
+
+.btn-red{ 
+    -fx-background-color: #F44336;  
+}
+
+.btn-red:hover{
+    -fx-background-color: #F26F68;
+}
+.btn-red:pressed{
+    -fx-background-color: #EF9A9A;
+}
+
+.btn-green{ 
+    -fx-background-color: #4CAF50;
+}
+
+.btn-green:hover{
+    -fx-background-color: #81C784;
+}
+.btn-green:pressed{
+    -fx-background-color: #A5D6A7;
+}
+
+.btn:disabled{
+    -fx-background-color: #BDBDBD;
+
+}
+
