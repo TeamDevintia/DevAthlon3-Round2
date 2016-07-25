@@ -29,6 +29,11 @@ public class ServerJarManager {
      * Adds all supported jars to a list. We don't support untested jars!
      */
     public void init() {
+        // 1.9
+        supportedJars.add(new ServerJar(new File("craftbukkit-1.9.4.jar"), ServerMod.CRAFTBUKKIT, ServerVersion.v1_9_R2, false));
+        supportedJars.add(new ServerJar(new File("spigot-1.9.4.jar"), ServerMod.SPIGOT, ServerVersion.v1_9_R2, false));
+        // 1.10
+        supportedJars.add(new ServerJar(new File("craftbukkit-1.10.jar"), ServerMod.CRAFTBUKKIT, ServerVersion.v1_10_R1, false));
         supportedJars.add(new ServerJar(new File("spigot-1.10.jar"), ServerMod.SPIGOT, ServerVersion.v1_10_R1, false));
 
         // always use latest bungee, it is backwards compatible
