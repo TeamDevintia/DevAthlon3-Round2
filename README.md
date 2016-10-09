@@ -23,7 +23,7 @@ git clone https://github.com/TeamDevintia/DevAthlon3-Round2.git
 mvn clean install
 ```
 
-Or just get it from my ci http://bender.minidigger.me:9090/job/DevAthlon3-Round2
+Or just get it from my ci http://ci.minidigger.me/job/DevAthlon3-Round2/
 
 ## Quickstart
 
