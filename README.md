@@ -27,7 +27,7 @@ Or just get it from my ci http://bender.minidigger.me:9090/job/DevAthlon3-Round2
 
 ## Quickstart
 
-Get this zip (http://bender.minidigger.me/serverwrappertest.zip) as a quickstart.
+Get this zip (http://files.minidigger.me/serverwrappertest.zip) as a quickstart.
 
 Start the wrapper with the following command
 
